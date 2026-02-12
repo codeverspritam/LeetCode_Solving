@@ -144,3 +144,23 @@ var merge = function (nums1, m, nums2, n) {
     nums1[k--] = nums2[j--];
   }
 };
+
+/* Q7: Number of 1 Bits */
+const table = new Array(256).fill(0).map((_, i) => {
+  let c = 0,
+    x = i;
+  while (x !== 0) {
+    x &= x - 1;
+    c++;
+  }
+  return c;
+});
+
+function hammingWeight(n) {
+  return (
+    table[n & 0xff] +
+    table[(n >>> 8) & 0xff] +
+    table[(n >>> 16) & 0xff] +
+    table[(n >>> 24) & 0xff]
+  );
+}
