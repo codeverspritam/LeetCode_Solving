@@ -104,3 +104,19 @@ var longestCommonPrefix = function (strs) {
 
   return strs[0];
 };
+/*Q5: Plus One */
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var plusOne = function (digits) {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    digits[i] += 1;
+    if (digits[i] < 10) {
+      return digits; // no carry needed
+    }
+    digits[i] = 0; // carry case
+  }
+  digits.unshift(1); // agar sab 9 the toh
+  return digits;
+};
