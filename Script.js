@@ -228,3 +228,24 @@ var mergeAlternately = function (word1, word2) {
   }
   return merged;
 };
+
+/* Q10: Remove Digit From Number to Maximize Result */
+/**
+ * @param {string} number
+ * @param {character} digit
+ * @return {string}
+ */
+var removeDigit = function (number, digit) {
+  let lastIndex = -1; // store last occurrence in case we don't find optimal
+  for (let i = 0; i < number.length; i++) {
+    if (number[i] === digit) {
+      lastIndex = i; // update last found index
+      // check if next digit is bigger → better to remove here
+      if (i + 1 < number.length && number[i + 1] > digit) {
+        return number.slice(0, i) + number.slice(i + 1);
+      }
+    }
+  }
+  // if no "next bigger" found, remove last occurrence
+  return number.slice(0, lastIndex) + number.slice(lastIndex + 1);
+};
