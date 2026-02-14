@@ -536,3 +536,73 @@ Both result in the string &quot;51&quot;.
 	<li><code>digit</code> is a digit from <code>&#39;1&#39;</code> to <code>&#39;9&#39;</code>.</li>
 	<li><code>digit</code> occurs at least once in <code>number</code>.</li>
 </ul>
+
+---
+
+# Q11: [2620. Counter](https://leetcode.com/problems/counter)
+
+**Difficulty:** Easy  
+**Companies:** Companies That Ask This Question
+
+This problem is a staple for initial technical screens and online assessments at:
+
+- **Adobe**: Frequently tagged as a top question for Adobe's front-end engineering tracks.
+- **Amazon**: Often used in the early stages of their assessment process for junior developer roles to verify basic JS proficiency.
+- **ServiceNow**: Known for asking JavaScript-heavy trivia and utility functions during their front-end loops.
+- **Apple**: Uses similar utility-function implementation tasks to test recursive and asynchronous JavaScript.
+
+---
+
+### Why This Question?
+
+Interviewers use this to see if you understand:
+
+1.  **Closures**: How an inner function retains access to variables from its parent scope even after the parent has executed.
+2.  **State Persistence**: How to maintain a "private" state without using global variables.
+3.  **Increment Logic**: Distinguishing between post-increment (`n++`) and pre-increment (`++n`) to return the correct value at the right time.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** If you get this in an interview, be prepared for a follow-up like:
+>
+> - "How would you modify this to create multiple independent counters?"
+> - "Can you implement this using an ES6 Class instead of a closure?"
+
+<!-- description:start -->
+
+<p>Given an integer&nbsp;<code>n</code>,&nbsp;return a <code>counter</code> function. This <code>counter</code> function initially returns&nbsp;<code>n</code>&nbsp;and then returns 1 more than the previous value every subsequent time it is called (<code>n</code>, <code>n + 1</code>, <code>n + 2</code>, etc).</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+n = 10 
+[&quot;call&quot;,&quot;call&quot;,&quot;call&quot;]
+<strong>Output:</strong> [10,11,12]
+<strong>Explanation: 
+</strong>counter() = 10 // The first time counter() is called, it returns n.
+counter() = 11 // Returns 1 more than the previous time.
+counter() = 12 // Returns 1 more than the previous time.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+n = -2
+[&quot;call&quot;,&quot;call&quot;,&quot;call&quot;,&quot;call&quot;,&quot;call&quot;]
+<strong>Output:</strong> [-2,-1,0,1,2]
+<strong>Explanation:</strong> counter() initially returns -2. Then increases after each sebsequent call.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>-1000<sup>&nbsp;</sup>&lt;= n &lt;= 1000</code></li>
+	<li><code>0 &lt;= calls.length &lt;= 1000</code></li>
+	<li><code>calls[i] === &quot;call&quot;</code></li>
+</ul>
