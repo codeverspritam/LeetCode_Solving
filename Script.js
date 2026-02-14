@@ -164,3 +164,44 @@ function hammingWeight(n) {
     table[(n >>> 24) & 0xff]
   );
 }
+
+/* Q8: Isomorphic Strings */
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function (s, t) {
+  // Agar dono strings ki length hi equal nahi hai, to directly false
+  if (s.length !== t.length) return false;
+
+  // Do alag-alag map banaye:
+  // Ek s -> t mapping ke liye, aur ek t -> s mapping ke liye
+  const mapST = {}; // s to t mapping
+  const mapTS = {}; // t to s mapping
+
+  // Poora string loop karenge
+  for (let i = 0; i < s.length; i++) {
+    const charS = s[i]; // s ka currenft character
+    const charT = t[i]; // t ka current character
+
+    // Agar charS ka mapping abhi tak exist nahi karta, to usko assign karo
+    if (!mapST.hasOwnProperty(charS)) {
+      mapST[charS] = charT;
+    } else if (mapST[charS] !== charT) {
+      // Agar charS ka mapping kisi aur character se ho chuka hai, to false
+      return false;
+    }
+
+    // Same t -> s mapping check karenge
+    if (!mapTS.hasOwnProperty(charT)) {
+      mapTS[charT] = charS;
+    } else if (mapTS[charT] !== charS) {
+      // Agar reverse mapping galat hai, to bhi false
+      return false;
+    }
+  }
+
+  // Agar koi contradiction nahi mila, to true return karenge
+  return true;
+};
