@@ -205,3 +205,26 @@ var isIsomorphic = function (s, t) {
   // Agar koi contradiction nahi mila, to true return karenge
   return true;
 };
+
+/* Q9: Merge Strings Alternately */
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {string}
+ */
+var mergeAlternately = function (word1, word2) {
+  let merged = "";
+  let i = 0,
+    j = 0;
+  while (i < word1.length || j < word2.length) {
+    if (i < word1.length) {
+      merged += word1[i]; // word1 se character lo
+      i++;
+    }
+    if (j < word2.length) {
+      merged += word2[j]; // word2 se character lo
+      j++;
+    }
+  }
+  return merged;
+};
