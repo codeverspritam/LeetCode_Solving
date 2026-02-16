@@ -787,9 +787,111 @@ init = 25
 </ul>
 
 ---
+
 # Notes
+
 - Is function ka naam reduce hai. Ye ek array nums, ek function fn, aur ek starting value init leta hai.
 
 - Soch le tu ek container mein init daal ke baitha hai, ab tu nums ke har element ko use function fn ke through us container ke saath combine karta jaa raha hai. Aise karte karte tu ek final single value tak pahuchta hai.
 
 - Jaise agar tu sare number ka sum chahta hai, to fn hoga (a, b) => a + b aur init hoga 0. Ye sab numbers ko jod ke ek final result dega.
+
+---
+
+# Q14: [2629. Function Composition](https://leetcode.com/problems/function-composition)
+
+**Difficulty:** Easy  
+**Companies:** **Difficulty:** Easy  
+**Companies:** Companies That Ask This Question
+
+Ye problem un roles ke liye puchi jati hai jahan high-level **JavaScript architecture** ki samajh zaroori ho:
+
+- **Adobe**: Front-end engineering ke core rounds mein ye aksar pucha jata hai.
+- **Amazon**: JavaScript fundamentals aur higher-order functions check karne ke liye unka go-to sawal hai.
+- **Intuit**: Unke UI/Frontend developer assessments mein logic building ke liye ye standard question hai.
+- **Zomato & Uber**: Jahan complex state management aur data transformations hote hain, wahan aise patterns test kiye jate hain.
+
+---
+
+### Why This Question?
+
+Interviewers isse aapki **Functional Thinking** check karte hain:
+
+1.  **Higher-Order Functions**: Kya aap ek function return kar sakte hain jo dusre functions ko call kare?
+2.  **Right-to-Left Execution**: Composition hamesha right se left chalti hai ($f(g(x))$). Kya aapne array ko reverse direction mein process kiya?
+3.  **Efficiency**: Kya aap `reduceRight` use kar rahe hain ya manual loop? Interviewer aapki code clean-ness dekhta hai.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye twists de sakta hai:
+>
+> - "Kya aap isse `Array.reduceRight()` use karke ek line mein likh sakte hain?"
+> - "Agar functions array **empty** ho, toh output kya hona chahiye?" (Hint: It should return the identity function, i.e., return $x$ as is).
+> - "Async functions ke liye composition kaise implement karenge?" (Hint: `await` ka use karna padega loop ke andar).
+
+---
+
+<!-- description:start -->
+
+<p>Given an array of functions&nbsp;<code>[f<span style="font-size: 10.8333px;">1</span>, f<sub>2</sub>, f<sub>3</sub>,&nbsp;..., f<sub>n</sub>]</code>, return&nbsp;a new function&nbsp;<code>fn</code>&nbsp;that is the <strong>function&nbsp;composition</strong> of the array of functions.</p>
+
+<p>The&nbsp;<strong>function&nbsp;composition</strong>&nbsp;of&nbsp;<code>[f(x), g(x), h(x)]</code>&nbsp;is&nbsp;<code>fn(x) = f(g(h(x)))</code>.</p>
+
+<p>The&nbsp;<strong>function&nbsp;composition</strong>&nbsp;of an empty list of functions is the&nbsp;<strong>identity function</strong>&nbsp;<code>f(x) = x</code>.</p>
+
+<p>You may assume each&nbsp;function&nbsp;in the array accepts one integer as input&nbsp;and returns one integer as output.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> functions = [x =&gt; x + 1, x =&gt; x * x, x =&gt; 2 * x], x = 4
+<strong>Output:</strong> 65
+<strong>Explanation:</strong>
+Evaluating from right to left ...
+Starting with x = 4.
+2 * (4) = 8
+(8) * (8) = 64
+(64) + 1 = 65
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> functions = [x =&gt; 10 * x, x =&gt; 10 * x, x =&gt; 10 * x], x = 1
+<strong>Output:</strong> 1000
+<strong>Explanation:</strong>
+Evaluating from right to left ...
+10 * (1) = 10
+10 * (10) = 100
+10 * (100) = 1000
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> functions = [], x = 42
+<strong>Output:</strong> 42
+<strong>Explanation:</strong>
+The composition of zero functions is the identity function</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code><font face="monospace">-1000 &lt;= x &lt;= 1000</font></code></li>
+	<li><code><font face="monospace">0 &lt;= functions.length &lt;= 1000</font></code></li>
+	<li>all functions accept and return a single integer</li>
+</ul>
+
+---
+
+# Notes
+
+- Is function ka naam compose hai. Ye ek array leta hai functions ka – matlab bohot saare chhote-chhote functions diye gaye hain.
+
+- Phir ye ek naya function return karta hai, jo jab call hota hai kisi input x ke saath, to saare functions ko right to left (last se pehle) order mein uss input pe apply karta hai.
+
+- Soch le jaise tere paas ye functions hai:

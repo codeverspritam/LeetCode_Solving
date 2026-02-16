@@ -313,3 +313,26 @@ var reduce = function (nums, fn, init) {
 
   return val; // Final reduced value return karo
 };
+
+/* Q14: Function Composition */
+/**
+ * @param {Function[]} functions // Array of functions to compose
+ * @return {Function}            // Returns a new function that applies them right to left
+ */
+var compose = function (functions) {
+  return function (x) {
+    let result = x; // Start with the input x
+
+    // Loop from last function to first
+    for (let i = functions.length - 1; i >= 0; i--) {
+      result = functions[i](result); // Apply each function on the current result
+    }
+
+    return result; // Return the final result after applying all functions
+  };
+};
+
+/**
+ * const fn = compose([x => x + 1, x => 2 * x])
+ * fn(4) // 9
+ */
