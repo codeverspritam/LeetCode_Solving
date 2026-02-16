@@ -292,3 +292,24 @@ async function sleep(millis) {
  * let t = Date.now()
  * sleep(100).then(() => console.log(Date.now() - t)) // 100
  */
+
+/* Q13: Array Reduce Transformation */
+/**
+ * @param {number[]} nums     // Input array of numbers
+ * @param {Function} fn       // Function to apply between elements
+ * @param {number} init       // Initial value to start reducing from
+ * @return {number}           // Final reduced single value
+ */
+var reduce = function (nums, fn, init) {
+  let val = init; // Start with the initial value
+
+  if (nums.length === 0) {
+    return init; // Agar array empty hai to seedha initial value return kar do
+  } else {
+    nums.forEach((num) => {
+      val = fn(val, num); // Har element pe function apply karo aur result update karte jao
+    });
+  }
+
+  return val; // Final reduced value return karo
+};

@@ -684,3 +684,112 @@ Notes
 - await use karke JavaScript function ko pause karta hai jab tak setTimeout complete nahi ho jaata.
 
 - Promise resolve hone ke baad code aage chalta hai.
+
+---
+
+# Q13: [2626. Array Reduce Transformation](https://leetcode.com/problems/array-reduce-transformation)
+
+**Difficulty:** Easy  
+**Companies:** Companies That Ask This Question
+
+Ye question un companies mein zyada pucha jata hai jo **Functional Programming** aur **Front-end Fundamentals** par focus karti hain:
+
+- **Adobe**: JS core concepts aur array manipulation check karne ke liye unka favourite hai.
+- **Amazon**: JavaScript-based assessments mein basic logic building ke liye pucha jata hai.
+- **Uber & Flipkart**: In companies ke UI/Front-end rounds mein `reduce` aur `map` jaise functions ki internal working aksar puchi jati hai.
+- **Startups (like Razorpay, Swiggy)**: Jahan modern JS framework (React/Vue) use hote hain, wahan core array methods ki depth check karne ke liye ye standard hai.
+
+---
+
+### Why This Question?
+
+Interviewers ye dekhna chahte hain ki aapko built-in functions ke peeche ka **logic** pata hai ya nahi:
+
+1.  **Manual Implementation**: Kya aap bina `.reduce()` method use kiye, manually loop chala kar value accumulate kar sakte hain?
+2.  **Callback Logic**: Isme check hota hai ki aap callback functions aur `accumulator` ka concept samajhte hain ya nahi.
+3.  **Edge Case Handling**: Jaise agar array khali (`empty`) ho, toh kya aap `initialValue` sahi se return kar rahe hain?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interview mein ye follow-ups expect karein:
+>
+> - "Kya aap `reduce` function ko use karke ek **Array Map** ya **Filter** function bana sakte hain?"
+> - "Agar hum `initialValue` provide na karein, toh standard JS `reduce` kaise behave karega?"
+> - "Is implementation ki Time aur Space complexity kya hai?" (Hint: O(n) time, O(1) extra space).
+
+---
+
+<!-- description:start -->
+
+<p>Given an integer array <code>nums</code>, a reducer function <code>fn</code>, and an initial value <code>init</code>, return the final result obtained by executing the <code>fn</code> function on each element of the array, sequentially, passing in the return value from the calculation on the preceding element.</p>
+
+<p>This result is achieved through the following operations: <code>val = fn(init, nums[0]), val = fn(val, nums[1]), val = fn(val, nums[2]), ...</code> until every element in the array has been processed. The ultimate value of <code>val</code> is then returned.</p>
+
+<p>If the length of the array is 0, the function should return <code>init</code>.</p>
+
+<p>Please solve it without using the built-in <code>Array.reduce</code> method.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+nums = [1,2,3,4]
+fn = function sum(accum, curr) { return accum + curr; }
+init = 0
+<strong>Output:</strong> 10
+<strong>Explanation:</strong>
+initially, the value is init=0.
+(0) + nums[0] = 1
+(1) + nums[1] = 3
+(3) + nums[2] = 6
+(6) + nums[3] = 10
+The final answer is 10.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+nums = [1,2,3,4]
+fn = function sum(accum, curr) { return accum + curr * curr; }
+init = 100
+<strong>Output:</strong> 130
+<strong>Explanation:</strong>
+initially, the value is init=100.
+(100) + nums[0] * nums[0] = 101
+(101) + nums[1] * nums[1] = 105
+(105) + nums[2] * nums[2] = 114
+(114) + nums[3] * nums[3] = 130
+The final answer is 130.
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+nums = []
+fn = function sum(accum, curr) { return 0; }
+init = 25
+<strong>Output:</strong> 25
+<strong>Explanation:</strong> For empty arrays, the answer is always init.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>0 &lt;= nums.length &lt;= 1000</code></li>
+	<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+	<li><code>0 &lt;= init &lt;= 1000</code></li>
+</ul>
+
+---
+# Notes
+- Is function ka naam reduce hai. Ye ek array nums, ek function fn, aur ek starting value init leta hai.
+
+- Soch le tu ek container mein init daal ke baitha hai, ab tu nums ke har element ko use function fn ke through us container ke saath combine karta jaa raha hai. Aise karte karte tu ek final single value tak pahuchta hai.
+
+- Jaise agar tu sare number ka sum chahta hai, to fn hoga (a, b) => a + b aur init hoga 0. Ye sab numbers ko jod ke ek final result dega.
