@@ -895,3 +895,81 @@ The composition of zero functions is the identity function</pre>
 - Phir ye ek naya function return karta hai, jo jab call hota hai kisi input x ke saath, to saare functions ko right to left (last se pehle) order mein uss input pe apply karta hai.
 
 - Soch le jaise tere paas ye functions hai:
+
+---
+
+# Q15: [2703. Return Length of Arguments Passed](https://leetcode.com/problems/return-length-of-arguments-passed)
+
+**Difficulty:** Easy  
+**Companies:** Companies That Ask This Question
+
+Ye question aksar **Online Assessments (OA)** aur **Screening Rounds** mein pucha jata hai:
+
+- **Adobe**: JavaScript internals aur language-specific features check karne ke liye.
+- **Amazon**: Unke initial coding rounds mein "Easy" level constraints ke liye ye favourite hai.
+- **Paytm & PhonePe**: Front-end roles ke liye jahan language ke basic syntax par pakad dekhi jati hai.
+
+---
+
+### Why This Question?
+
+Iska logic ek line ka hai, lekin interviewer ye dekhta hai ki aapko JavaScript ke **variadic functions** ki knowledge hai ya nahi:
+
+1.  **Rest Parameters (`...args`)**: Modern JS (ES6) ka use karke aap kitne bhi arguments ko ek array mein kaise convert karte ho.
+2.  **Arguments Object**: Purane style ka `arguments` object aur modern `rest parameters` ke beech ka farq aapko pata hai ya nahi.
+3.  **Efficiency**: Kya aap faltu ka loop chala rahe ho ya seedha `.length` property use kar rahe ho?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Isme interviewer aapko confuse karne ke liye ye bol sakta hai:
+>
+> - "Agar main `null` ya `undefined` pass karun, toh kya length badhni chahiye?" (Answer: Haan, har passed argument count hota hai).
+> - "Kya aap ise bina `...args` use kiye implement kar sakte hain?" (Hint: `arguments.length` use karke).
+> - "Arrow functions aur regular functions mein `arguments` object kaise behave karta hai?" (Hint: Arrow functions mein `arguments` object nahi hota!).
+
+---
+
+<!-- description:start -->
+
+Write a function&nbsp;<code>argumentsLength</code> that returns the count of arguments passed to it.
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> args = [5]
+<strong>Output:</strong> 1
+<strong>Explanation:</strong>
+argumentsLength(5); // 1
+
+One value was passed to the function so it should return 1.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> args = [{}, null, &quot;3&quot;]
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> 
+argumentsLength({}, null, &quot;3&quot;); // 3
+
+Three values were passed to the function so it should return 3.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>args</code>&nbsp;is a valid JSON array</li>
+	<li><code>0 &lt;= args.length &lt;= 100</code></li>
+</ul>
+
+---
+
+# Notes
+
+- Ye function argumentsLength ek rest parameter ...args use karta hai, jo jitne bhi arguments function me pass hote hain unko ek array ke form me pakad leta hai.
+
+- Phir wo simply args.length return karta hai, yani us array ke elements kitne hai... matlab kitne arguments pass hue the, wo batata hai.

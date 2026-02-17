@@ -336,3 +336,16 @@ var compose = function (functions) {
  * const fn = compose([x => x + 1, x => 2 * x])
  * fn(4) // 9
  */
+
+/* Q15: Return Length of Arguments Passed */
+/**
+ * @param {...(null|boolean|number|string|Array|Object)} args
+ * @return {number}
+ */
+var argumentsLength = function (...args) {
+  return args.length; // args ek array hai of all passed arguments; uska length return karo
+};
+
+/**
+ * argumentsLength(1, 2, 3); // 3
+ */
