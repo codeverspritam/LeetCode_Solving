@@ -1,0 +1,351 @@
+// Define the function
+function twoSum(nums, target) {
+  let map = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    let complement = target - nums[i];
+
+    if (map.hasOwnProperty(complement)) {
+      return [map[complement], i];
+    }
+
+    map[nums[i]] = i;
+  }
+
+  return [];
+}
+
+// Input array and target
+const nums = [2, 7, 11, 15];
+const target = 9;
+
+// Call the function and log the result
+console.log(twoSum(nums, target)); // Output: [0, 1]
+
+/*Q2: Median of Two Sorted Arrays */
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function (nums1, nums2) {
+  if (nums1.length > nums2.length) {
+    return findMedianSortedArrays(nums2, nums1);
+  }
+
+  let a = nums1.length;
+  let b = nums2.length;
+  let low = 0;
+  let high = a;
+
+  while (low <= high) {
+    let partitionA = Math.floor((low + high) / 2);
+    let partitionB = Math.floor((a + b + 1) / 2) - partitionA;
+
+    let maxLeftA = partitionA === 0 ? -Infinity : nums1[partitionA - 1];
+    let minRightA = partitionA === a ? Infinity : nums1[partitionA];
+
+    let maxLeftB = partitionB === 0 ? -Infinity : nums2[partitionB - 1];
+    let minRightB = partitionB === b ? Infinity : nums2[partitionB];
+
+    if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+      if ((a + b) % 2 === 0) {
+        return (
+          (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2
+        );
+      } else {
+        return Math.max(maxLeftA, maxLeftB);
+      }
+    } else if (maxLeftA > minRightB) {
+      high = partitionA - 1;
+    } else {
+      low = partitionA + 1;
+    }
+  }
+};
+
+/* Q3: Palindrome Number */
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+  var reverse = 0;
+  var copy = x;
+
+  //The loop break when the copy of original number becomes zero
+  //Also negative number cannot be a palindrome
+  while (copy > 0) {
+    const digit = copy % 10;
+    reverse = reverse * 10 + digit;
+    copy = ~~(copy / 10);
+  }
+
+  return reverse == x;
+};
+
+/* Q4: Longest Common Prefix */
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+  if (!strs.length) return "";
+
+  for (let i = 0; i < strs[0].length; i++) {
+    const char = strs[0][i];
+
+    for (let j = 1; j < strs.length; j++) {
+      if (i >= strs[j].length || strs[j][i] !== char) {
+        return strs[0].slice(0, i);
+      }
+    }
+  }
+
+  return strs[0];
+};
+/*Q5: Plus One */
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var plusOne = function (digits) {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    digits[i] += 1;
+    if (digits[i] < 10) {
+      return digits; // no carry needed
+    }
+    digits[i] = 0; // carry case
+  }
+  digits.unshift(1); // agar sab 9 the toh
+  return digits;
+};
+
+/* Q6: Merge Sorted Array */
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+var merge = function (nums1, m, nums2, n) {
+  let i = m - 1,
+    j = n - 1,
+    k = m + n - 1;
+  while (i >= 0 && j >= 0) {
+    if (nums1[i] > nums2[j]) {
+      nums1[k--] = nums1[i--];
+    } else {
+      nums1[k--] = nums2[j--];
+    }
+  }
+  while (j >= 0) {
+    nums1[k--] = nums2[j--];
+  }
+};
+
+/* Q7: Number of 1 Bits */
+const table = new Array(256).fill(0).map((_, i) => {
+  let c = 0,
+    x = i;
+  while (x !== 0) {
+    x &= x - 1;
+    c++;
+  }
+  return c;
+});
+
+function hammingWeight(n) {
+  return (
+    table[n & 0xff] +
+    table[(n >>> 8) & 0xff] +
+    table[(n >>> 16) & 0xff] +
+    table[(n >>> 24) & 0xff]
+  );
+}
+
+/* Q8: Isomorphic Strings */
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function (s, t) {
+  // Agar dono strings ki length hi equal nahi hai, to directly false
+  if (s.length !== t.length) return false;
+
+  // Do alag-alag map banaye:
+  // Ek s -> t mapping ke liye, aur ek t -> s mapping ke liye
+  const mapST = {}; // s to t mapping
+  const mapTS = {}; // t to s mapping
+
+  // Poora string loop karenge
+  for (let i = 0; i < s.length; i++) {
+    const charS = s[i]; // s ka currenft character
+    const charT = t[i]; // t ka current character
+
+    // Agar charS ka mapping abhi tak exist nahi karta, to usko assign karo
+    if (!mapST.hasOwnProperty(charS)) {
+      mapST[charS] = charT;
+    } else if (mapST[charS] !== charT) {
+      // Agar charS ka mapping kisi aur character se ho chuka hai, to false
+      return false;
+    }
+
+    // Same t -> s mapping check karenge
+    if (!mapTS.hasOwnProperty(charT)) {
+      mapTS[charT] = charS;
+    } else if (mapTS[charT] !== charS) {
+      // Agar reverse mapping galat hai, to bhi false
+      return false;
+    }
+  }
+
+  // Agar koi contradiction nahi mila, to true return karenge
+  return true;
+};
+
+/* Q9: Merge Strings Alternately */
+/**
+ * @param {string} word1
+ * @param {string} word2
+ * @return {string}
+ */
+var mergeAlternately = function (word1, word2) {
+  let merged = "";
+  let i = 0,
+    j = 0;
+  while (i < word1.length || j < word2.length) {
+    if (i < word1.length) {
+      merged += word1[i]; // word1 se character lo
+      i++;
+    }
+    if (j < word2.length) {
+      merged += word2[j]; // word2 se character lo
+      j++;
+    }
+  }
+  return merged;
+};
+
+/* Q10: Remove Digit From Number to Maximize Result */
+/**
+ * @param {string} number
+ * @param {character} digit
+ * @return {string}
+ */
+var removeDigit = function (number, digit) {
+  let lastIndex = -1; // store last occurrence in case we don't find optimal
+  for (let i = 0; i < number.length; i++) {
+    if (number[i] === digit) {
+      lastIndex = i; // update last found index
+      // check if next digit is bigger → better to remove here
+      if (i + 1 < number.length && number[i + 1] > digit) {
+        return number.slice(0, i) + number.slice(i + 1);
+      }
+    }
+  }
+  // if no "next bigger" found, remove last occurrence
+  return number.slice(0, lastIndex) + number.slice(lastIndex + 1);
+};
+
+/* Q11: Counter */
+/**
+ * @param {number} n
+ * @return {Function} counter
+ */
+var createCounter = function (n) {
+  return function () {
+    return n++;
+  };
+};
+
+/**
+ * const counter = createCounter(10)
+ * counter() // 10
+ * counter() // 11
+ * counter() // 12
+ */
+
+/* Q12: Sleep */
+/**
+ * @param {number} millis
+ * @return {Promise}
+ */
+// Ek async function banaya gaya hai jiska naam hai sleep
+// Yeh function input mein 'millis' lega — yaani kitne milliseconds rukna hai
+async function sleep(millis) {
+  // Ek naya Promise banaya gaya hai jisme hum setTimeout ka use kar rahe hain
+  // setTimeout ke andar jitne millis diye gaye hain, utna rukega
+  // Jaise hi time complete hoga, res() call hoga jo promise ko resolve karega
+  await new Promise((res) => {
+    setTimeout(() => {
+      res(); // Promise resolve ho gaya, ab function aage badhega
+    }, millis); // yeh delay time hai — jitna millis diya gaya hai
+  });
+
+  // Ab function resume karega (rukne ke baad)
+}
+
+/**
+ * let t = Date.now()
+ * sleep(100).then(() => console.log(Date.now() - t)) // 100
+ */
+
+/* Q13: Array Reduce Transformation */
+/**
+ * @param {number[]} nums     // Input array of numbers
+ * @param {Function} fn       // Function to apply between elements
+ * @param {number} init       // Initial value to start reducing from
+ * @return {number}           // Final reduced single value
+ */
+var reduce = function (nums, fn, init) {
+  let val = init; // Start with the initial value
+
+  if (nums.length === 0) {
+    return init; // Agar array empty hai to seedha initial value return kar do
+  } else {
+    nums.forEach((num) => {
+      val = fn(val, num); // Har element pe function apply karo aur result update karte jao
+    });
+  }
+
+  return val; // Final reduced value return karo
+};
+
+/* Q14: Function Composition */
+/**
+ * @param {Function[]} functions // Array of functions to compose
+ * @return {Function}            // Returns a new function that applies them right to left
+ */
+var compose = function (functions) {
+  return function (x) {
+    let result = x; // Start with the input x
+
+    // Loop from last function to first
+    for (let i = functions.length - 1; i >= 0; i--) {
+      result = functions[i](result); // Apply each function on the current result
+    }
+
+    return result; // Return the final result after applying all functions
+  };
+};
+
+/**
+ * const fn = compose([x => x + 1, x => 2 * x])
+ * fn(4) // 9
+ */
+
+/* Q15: Return Length of Arguments Passed */
+/**
+ * @param {...(null|boolean|number|string|Array|Object)} args
+ * @return {number}
+ */
+var argumentsLength = function (...args) {
+  return args.length; // args ek array hai of all passed arguments; uska length return karo
+};
+
+/**
+ * argumentsLength(1, 2, 3); // 3
+ */
