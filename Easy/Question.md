@@ -973,3 +973,94 @@ Three values were passed to the function so it should return 3.
 - Ye function argumentsLength ek rest parameter ...args use karta hai, jo jitne bhi arguments function me pass hote hain unko ek array ke form me pakad leta hai.
 
 - Phir wo simply args.length return karta hai, yani us array ke elements kitne hai... matlab kitne arguments pass hue the, wo batata hai.
+
+---
+
+# Q16: [2666. Allow One Function Call](https://leetcode.com/problems/allow-one-function-call)
+
+**Difficulty:** Easy  
+**Companies:** Companies That Ask This Question
+
+Ye "Closure" ka concept test karne ke liye top-tier companies ka favorite hai:
+
+- **Adobe**: JS Closures aur Design Patterns par unka focus kaafi zyada rehta hai.
+- **Amazon**: Front-end/Full-stack interviews mein efficiency aur state preservation check karne ke liye.
+- **Intuit & ServiceNow**: Jahan UI components ki reliability aur "one-time execution" zaroori hoti hai.
+- **Startups (Curefit, Slice)**: Fast-paced coding rounds mein logic check karne ke liye.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **State Management** ki samajh check karna hai:
+
+1.  **Closures**: Kya aap function ke scope ke bahar ek variable (`hasBeenCalled`) maintain kar sakte hain jo execution track kare?
+2.  **Higher-Order Functions**: Ye ek function return karta hai jo original function ko wrap karta hai—ye decorator pattern ki base hai.
+3.  **Arguments Handling**: Kya aap `...args` ko correctly pass kar rahe hain original function mein?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar function `undefined` return kare, toh aapka logic kaise handle karega?"
+> - "Kya aap isse ek generic **`N-times call`** function mein convert kar sakte hain?"
+> - "Memory leak se bachne ke liye, kya execution ke baad hum original function ka reference `null` kar sakte hain?"
+
+---
+
+<!-- description:start -->
+
+<p>Given a function <code>fn</code>, return a new function that is identical to the original function except that it ensures&nbsp;<code>fn</code>&nbsp;is&nbsp;called at most once.</p>
+
+<ul>
+	<li>The first time the returned function is called, it should return the same result as&nbsp;<code>fn</code>.</li>
+	<li>Every subsequent time it is called, it should return&nbsp;<code>undefined</code>.</li>
+</ul>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (a,b,c) =&gt; (a + b + c), calls = [[1,2,3],[2,3,6]]
+<strong>Output:</strong> [{&quot;calls&quot;:1,&quot;value&quot;:6}]
+<strong>Explanation:</strong>
+const onceFn = once(fn);
+onceFn(1, 2, 3); // 6
+onceFn(2, 3, 6); // undefined, fn was not called
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (a,b,c) =&gt; (a * b * c), calls = [[5,7,4],[2,3,6],[4,6,8]]
+<strong>Output:</strong> [{&quot;calls&quot;:1,&quot;value&quot;:140}]
+<strong>Explanation:</strong>
+const onceFn = once(fn);
+onceFn(5, 7, 4); // 140
+onceFn(2, 3, 6); // undefined, fn was not called
+onceFn(4, 6, 8); // undefined, fn was not called
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>calls</code> is a valid JSON array</li>
+	<li><code>1 &lt;= calls.length &lt;= 10</code></li>
+	<li><code>1 &lt;= calls[i].length &lt;= 100</code></li>
+	<li><code>2 &lt;= JSON.stringify(calls).length &lt;= 1000</code></li>
+</ul>
+
+---
+
+# Notes
+
+- Yeh once(fn) ek wrapper return karta hai — jo fn() ko bas pehli baar hi call karega.
+
+- Ek baar function chal gaya, to flag true ho jaata hai.
+
+- Uske baad koi bhi arguments do ya call karo, kuch bhi return nahi karega.
+
+- Useful hota hai jaise: login function, payment trigger — jahan accidental baar-baar call nahi honi chahiye.

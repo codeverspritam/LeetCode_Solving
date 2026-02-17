@@ -349,3 +349,30 @@ var argumentsLength = function (...args) {
 /**
  * argumentsLength(1, 2, 3); // 3
  */
+
+/* Q16: Allow One Function Call */
+/**
+ * @param {Function} fn        // Original function jo sirf ek baar run karni hai
+ * @return {Function}          // Naya function jo ek baar se zyada allow nahi karega
+ */
+var once = function (fn) {
+  let flag = false; // Ye flag batayega ki function chal chuka hai ya nahi
+
+  return function (...args) {
+    if (flag === false) {
+      // Agar function pehli baar call ho raha hai
+      flag = true; // Flag ko true kar do taaki next time ignore ho
+      return fn(...args); // Original function call karo with given arguments
+    } else {
+      // Do nothing (function already executed once)
+    }
+  };
+};
+
+/**
+ * let fn = (a,b,c) => (a + b + c)
+ * let onceFn = once(fn)
+ *
+ * onceFn(1,2,3); // 6
+ * onceFn(2,3,6); // returns undefined without calling fn
+ */
