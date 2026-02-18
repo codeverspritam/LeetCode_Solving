@@ -1293,3 +1293,136 @@ let p2 = Promise.resolve(10);
 1. Tum async function bana sakte ho — so you can await both promises.
 2. Use `let val1 = await promise1`, `let val2 = await promise2`
 3. `return val1 + val2` — this will auto-wrap in a promise.
+
+---
+
+# Q19: [2621. Sleep](https://leetcode.com/problems/sleep)
+
+**Difficulty:** Easy  
+**Companies:** Google, Meta (Facebook), Netflix, Amazon
+
+Ye JavaScript interviews mein **Event Loop** aur **Asynchronous Programming** ki core understanding check karne ke liye ek fundamental question hai:
+
+- **Google & Meta**: In companies mein front-end/full-stack interviews ke dauraan JS runtime environment aur `setTimeout` ki internal workings par kaafi zor diya jaata hai.
+- **Netflix & Amazon**: Jahaan performance aur non-blocking operations critical hote hain, wahaan `Promise`-based sleep function banana ek common requirement hai.
+- **ServiceNow & Adobe**: UI latency management aur debouncing/throttling patterns ke context mein yeh logic pucha jaata hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Asynchronous Flow Control** ki samajh check karna hai:
+
+1.  **Event Loop Mastery**: Kya aap jaante hain ki `setTimeout` code execution ko "block" nahi karta, balki task queue mein daal deta hai?
+2.  **Promise Construction**: Kya aap `new Promise` constructor ko sahi se use kar ke `resolve` function ko time out ke baad call kar sakte hain?
+3.  **Syntactic Sugar (Async/Await)**: Ye check karna ki aap is custom `sleep` utility ko doosre `async` functions mein effectively `await` kar sakte hain ya nahi.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar hum `setTimeout` ki jagah ek busy-loop (jaise `while` loop) use karein, toh kya hoga?" (Correct answer: It will block the main thread and freeze the UI/server.)
+> - "Kya aap is `sleep` function ko Node.js environment mein use karne ke liye optimize kar sakte hain?"
+> - "Browser ke performance tools mein ye `sleep` operation network ya CPU usage graphs mein kahan dikhega?"
+
+---
+
+**Proactive Follow-up**: Kya aap iska **Optimal JavaScript Code** dekhna chahenge, ya kisi aur **LeetCode number** ka breakdown chahiye?
+
+##
+
+<!-- description:start -->
+
+<p>Given&nbsp;a positive integer <code>millis</code>, write an asynchronous function that sleeps for <code>millis</code>&nbsp;milliseconds. It can resolve any value.</p>
+
+<p><strong>Note</strong> that <em>minor</em> deviation from <code>millis</code> in the actual sleep duration is acceptable.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> millis = 100
+<strong>Output:</strong> 100
+<strong>Explanation:</strong> It should return a promise that resolves after 100ms.
+let t = Date.now();
+sleep(100).then(() =&gt; {
+  console.log(Date.now() - t); // 100
+});
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> millis = 200
+<strong>Output:</strong> 200
+<strong>Explanation:</strong> It should return a promise that resolves after 200ms.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>1 &lt;= millis &lt;= 1000</code></li>
+</ul>
+
+## Notes
+
+- (millis) ye hame ak positive integer diya gaya hai
+- hame ak asyncronus function likhna hai jo ak value resolve kare or soo jaiga (millis second ke liye )
+- so hame ak yesa function likhna hai jo milli second ke baad invok ho
+- Yeh lo sleep() function ke short & strong notes in Hinglish, jo tum life-time yaad rakh sakte ho:
+
+# 📌 sleep() Function – JavaScript (Async Delay)
+
+**Definition:** sleep(millis) ek async function hai jo code execution ko kuch milliseconds ke liye rokta hai.
+
+---
+
+## 🔧 Kaise kaam karta hai?
+
+- setTimeout() ke through ek Promise banaya jaata hai.
+- await use karke JavaScript function ko pause karta hai jab tak setTimeout complete nahi ho jaata.
+- Promise resolve hone ke baad code aage chalta hai.
+
+---
+
+## 🧠 Syntax:
+
+```js
+async function sleep(millis) {
+  await new Promise((res) => setTimeout(res, millis));
+}
+```
+
+---
+
+## 🎯 Use Cases:
+
+**Situation** | **Example**  
+Artificial delay | API call ke baad loading dikhana  
+Retry mechanism | Network request fail ho toh dubara try karna  
+Animation wait | Slideshow ya spinner delay
+
+---
+
+## ✅ Example:
+
+```js
+async function demo() {
+  console.log("Start");
+  await sleep(3000); // 3 second delay
+  console.log("End after 3 seconds");
+}
+```
+
+---
+
+## 📚 Important Points:
+
+- sleep() sirf async function ke andar hi kaam karega.
+- JavaScript thread ko block nahi karta, background mein delay hota hai.
+- Mostly await ke saath use hota hai.
+
+Agar tumhe aur bhi utility functions ya async-await tricks chahiye, batao – main ready hoon!

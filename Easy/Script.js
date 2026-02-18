@@ -423,3 +423,28 @@ var addTwoPromises = async function (promise1, promise2) {
  * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
  *   .then(console.log); // 4
  */
+
+/* Q19: Sleep */
+/**
+ * @param {number} millis
+ * @return {Promise}
+ */
+// Ek async function banaya gaya hai jiska naam hai sleep
+// Yeh function input mein 'millis' lega — yaani kitne milliseconds rukna hai
+async function sleep(millis) {
+  // Ek naya Promise banaya gaya hai jisme hum setTimeout ka use kar rahe hain
+  // setTimeout ke andar jitne millis diye gaye hain, utna rukega
+  // Jaise hi time complete hoga, res() call hoga jo promise ko resolve karega
+  await new Promise((res) => {
+    setTimeout(() => {
+      res(); // Promise resolve ho gaya, ab function aage badhega
+    }, millis); // yeh delay time hai — jitna millis diya gaya hai
+  });
+
+  // Ab function resume karega (rukne ke baad)
+}
+
+/**
+ * let t = Date.now()
+ * sleep(100).then(() => console.log(Date.now() - t)) // 100
+ */
