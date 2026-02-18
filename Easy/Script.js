@@ -448,3 +448,49 @@ async function sleep(millis) {
  * let t = Date.now()
  * sleep(100).then(() => console.log(Date.now() - t)) // 100
  */
+
+/* Q20: Timeout Cancellation */
+/**
+ * @param {Function} fn
+ * @param {Array} args
+ * @param {number} t
+ * @return {Function}
+ */
+var cancellable = function (fn, args, t) {
+  // \U0001f501 setTimeout se fn ko t milliseconds baad call karna schedule kar rahe hain
+  let timeoutId = setTimeout(() => {
+    fn(...args); // \U0001f4de fn function ko uske arguments ke saath call kar rahe hain
+  }, t);
+
+  // ❌ Ye function call karne par timeout cancel ho jayega
+  let cancelFn = () => {
+    clearTimeout(timeoutId); // ⛔ Scheduled function execute hone se rok diya
+  };
+
+  // \U0001f519 cancelFn ko return kar rahe hain taaki baad mein call karke cancel kar sako
+  return cancelFn;
+};
+
+/**
+ *  const result = [];
+ *
+ *  const fn = (x) => x * 5;
+ *  const args = [2], t = 20, cancelTimeMs = 50;
+ *
+ *  const start = performance.now();
+ *
+ *  const log = (...argsArr) => {
+ *      const diff = Math.floor(performance.now() - start);
+ *      result.push({"time": diff, "returned": fn(...argsArr)});
+ *  }
+ *
+ *  const cancel = cancellable(log, args, t);
+ *
+ *  const maxT = Math.max(t, cancelTimeMs);
+ *
+ *  setTimeout(cancel, cancelTimeMs);
+ *
+ *  setTimeout(() => {
+ *      console.log(result); // [{"time":20,"returned":10}]
+ *  }, maxT + 15)
+ */

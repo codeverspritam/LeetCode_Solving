@@ -1426,3 +1426,156 @@ async function demo() {
 - Mostly await ke saath use hota hai.
 
 Agar tumhe aur bhi utility functions ya async-await tricks chahiye, batao – main ready hoon!
+
+---
+
+# Q20: [2715. Timeout Cancellation](https://leetcode.com/problems/timeout-cancellation)
+
+**Difficulty:** Easy  
+**Companies:** Google, Uber, Amazon, Flipkart
+
+Ye JavaScript interviews mein **Timers** aur **Execution Control** ki deep understanding check karne ke liye pucha jata hai:
+
+- **Google & Uber**: Front-end roles mein jahan users ke actions (jaise search autocomplete) ko cancel karna padta hai, wahan ye concept bohot kaam aata hai.
+- **Amazon & Flipkart**: Performance optimization aur unnecessary API calls ko rokne (debouncing logic) ke context mein ye pucha jata hai.
+- **Fintech Startups (PhonePe, Groww)**: Jahan transaction ya critical state changes ko ek specific window mein cancel karne ki flexibility chahiye hoti hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Manual Control over Async Tasks** ki samajh check karna hai:
+
+1.  **Closures & Scoping**: Kya aap ek aisi function return kar sakte hain jo `timerId` ka access rakhti ho aur usey later point par `clearTimeout` kar sake?
+2.  **Delayed Execution**: `setTimeout` ke behaviour ko handle karna aur ye ensure karna ki function exact `t` milliseconds baad hi execute ho.
+3.  **Higher-Order Functions**: Ek function ko as an argument lena aur ek "cancel" function return karna—ye pattern sophisticated UI libraries mein kaafi use hota hai.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar function already execute ho chuka ho, toh cancel function call karne par kya hona chahiye?"
+> - "Kya aap isse `AbortController` API ka use karke implement kar sakte hain?"
+> - "Memory management ke point of view se, `clearTimeout` call karna kyu zaroori hai?"
+
+---
+
+**Proactive Follow-up**: Kya aap iska **`clearTimeout` implementation** wala code dekhna chahenge, ya kisi aur **LeetCode number** ka breakdown chahiye?
+
+##
+
+<!-- description:start -->
+
+<p>Given a function <code>fn</code>, an array of&nbsp;arguments&nbsp;<code>args</code>, and a timeout&nbsp;<code>t</code>&nbsp;in milliseconds, return a cancel function <code>cancelFn</code>.</p>
+
+<p>After a delay of <code>cancelTimeMs</code>, the returned cancel function <code>cancelFn</code> will be invoked.</p>
+
+<pre>
+setTimeout(cancelFn, cancelTimeMs)
+</pre>
+
+<p>Initially, the execution of the function <code>fn</code> should be delayed by <code>t</code> milliseconds.</p>
+
+<p>If, before the delay of <code>t</code> milliseconds, the function <code>cancelFn</code> is invoked, it should cancel the delayed execution of <code>fn</code>. Otherwise, if <code>cancelFn</code> is not invoked within the specified delay <code>t</code>, <code>fn</code> should be executed with the provided <code>args</code> as arguments.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x) =&gt; x * 5, args = [2], t = 20
+<strong>Output:</strong> [{&quot;time&quot;: 20, &quot;returned&quot;: 10}]
+<strong>Explanation:</strong> 
+const cancelTimeMs = 50;
+const cancelFn = cancellable((x) =&gt; x * 5, [2], 20);
+setTimeout(cancelFn, cancelTimeMs);
+
+The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms), which happened after the execution of fn(2) at 20ms.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x) =&gt; x**2, args = [2], t = 100
+<strong>Output:</strong> []
+<strong>Explanation:</strong> 
+const cancelTimeMs = 50;
+const cancelFn = cancellable((x) =&gt; x**2, [2], 100);
+setTimeout(cancelFn, cancelTimeMs);
+
+The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms), which happened before the execution of fn(2) at 100ms, resulting in fn(2) never being called.
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x1, x2) =&gt; x1 * x2, args = [2,4], t = 30
+<strong>Output:</strong> [{&quot;time&quot;: 30, &quot;returned&quot;: 8}]
+<strong>Explanation: 
+</strong>const cancelTimeMs = 100;
+const cancelFn = cancellable((x1, x2) =&gt; x1 * x2, [2,4], 30);
+setTimeout(cancelFn, cancelTimeMs);
+
+The cancellation was scheduled to occur after a delay of cancelTimeMs (100ms), which happened after the execution of fn(2,4) at 30ms.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>fn</code> is a function</li>
+	<li><code>args</code> is a valid JSON array</li>
+	<li><code>1 &lt;= args.length &lt;= 10</code></li>
+	<li><code><font face="monospace">20 &lt;= t &lt;= 1000</font></code></li>
+	<li><code><font face="monospace">10 &lt;= cancelTimeMs &lt;= 1000</font></code></li>
+</ul>
+
+## Notes# Timeout Cancellation
+
+- hame ak founction provide kiya gaya hai
+- hame arguments provide kiye gai hai args ke and ak timeout t millsecond ke name se.
+- so hame cancelFn return karna hai.
+
+- fn : ek function jo run hona hai
+- args : us function ke liye arguments
+- t : kitne milliseconds ke baad fn run hona chahiye
+
+---
+
+## Task:
+
+Tumhe ek cancel function cancelFn return karna hai. Agar cancelFn ko t milliseconds ke andar call kiya gaya — to fn run nahi hona chahiye.
+
+Otherwise → fn(args) run hona chahiye, jaise normal setTimeout mein hota hai.
+
+---
+
+## 🔧 Real-Life Analogy:
+
+Socho tum kisi ko reminder set karte ho 5 second baad ka.
+
+Agar tum 5 second ke andar "cancel" bol do, → reminder bajta hi nahi.
+
+Nahi bola, → to reminder baj jaata hai 5 second ke baad.
+
+---
+
+## 🧠 Kaise Sochna Hai (Approach):
+
+1. setTimeout use karo fn ko delay se run karne ke liye.
+2. Us setTimeout ka ID store karo (timerId).
+3. cancelFn ke andar clearTimeout(timerId) likh do — jisse fn cancel ho jaye agar cancelFn time se pehle call hua.
+
+---
+
+## 📌 Important Concepts:
+
+- setTimeout(fn, t) → fn ko t ms ke baad run karta hai.
+- clearTimeout(timeoutId) → us fn ko cancel kar deta hai agar abhi run nahi hua ho.
+
+---
+
+## ⚠️ Edge Case:
+
+- cancelFn agar delay ke baad call ho — to fn already run ho chuka hoga, aur cancel karne ka koi effect nahi hoga.
