@@ -399,3 +399,27 @@ var mergeAlternately = function (word1, word2) {
   }
   return merged;
 };
+
+/* Q18: Add Two Promises */
+/**
+ * @param {Promise} promise1
+ * @param {Promise} promise2
+ * @return {Promise}
+ */
+// Ek async function define kar rahe hain jiska naam hai addTwoPromises
+// Isme 2 promises input ke roop mein milte hain
+var addTwoPromises = async function (promise1, promise2) {
+  // Pehle promise1 ka result wait karte hain aur usse val1 mein store karte hain
+  let val1 = await promise1;
+
+  // Ab promise2 ka result wait karte hain aur usse val2 mein store karte hain
+  let val2 = await promise2;
+
+  // Dono values ko add karke return kar dete hain
+  return val1 + val2;
+};
+
+/**
+ * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
+ *   .then(console.log); // 4
+ */

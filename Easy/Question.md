@@ -1190,3 +1190,106 @@ merged: a p b q c   d
 - Agar word2[j] hai, to use bhi merged me daalo.
 
 - Jab loop khatam hoga, to merged string me alternating characters + bacha hua part aa chuka hoga. Us merged string ko return karo.
+
+---
+
+# Q18: [2723. Add Two Promises](https://leetcode.com/problems/add-two-promises)
+
+**Difficulty:** Easy  
+**Companies:** Amazon, Google, Meta, Adobe
+
+Ye JavaScript/TypeScript interviews mein **Asynchronous Programming** ke basics check karne ke liye pucha jata hai:
+
+- **Amazon & Google**: Front-end aur Full-stack roles mein `Promises` aur `Async/Await` ki deep knowledge test karne ke liye.
+- **Adobe**: Unke rounds mein JS engine kaise kaam karta hai aur multiple async calls ko handle karne ka tareeka aksar pucha jata hai.
+- **Startups (Razorpay, Swiggy)**: Real-world scenarios (jaise do alag APIs se data fetch karke sum karna) simulate karne ke liye.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Promise Handling** ki efficiency check karna hai:
+
+1.  **Concurrent Execution**: Kya aap `Promise.all()` use kar rahe hain taaki dono promises parallel mein resolve hon, ya `await` use karke unhe slow (sequential) bana rahe hain?
+2.  **State Management**: Jab dono values mil jayein, toh unhe safely sum karke ek naya Promise return karna.
+3.  **Async/Await Syntax**: Modern JS coding standards aur clean code likhne ki ability.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar ek Promise reject ho jaye, toh aapka code kaise behave karega?"
+> - "Promise.all() aur manual await mein performance ka kya farak hai?"
+> - "Kya aap isse `Promise.then()` syntax se bina `async/await` use kiye likh sakte hain?"
+
+##
+
+<!-- description:start -->
+
+Given two promises <code>promise1</code> and <code>promise2</code>, return a new promise. <code>promise1</code> and <code>promise2</code>&nbsp;will both resolve with a number. The returned promise should resolve with the sum of the two numbers.
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+promise1 = new Promise(resolve =&gt; setTimeout(() =&gt; resolve(2), 20)), 
+promise2 = new Promise(resolve =&gt; setTimeout(() =&gt; resolve(5), 60))
+<strong>Output:</strong> 7
+<strong>Explanation:</strong> The two input promises resolve with the values of 2 and 5 respectively. The returned promise should resolve with a value of 2 + 5 = 7. The time the returned promise resolves is not judged for this problem.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+promise1 = new Promise(resolve =&gt; setTimeout(() =&gt; resolve(10), 50)), 
+promise2 = new Promise(resolve =&gt; setTimeout(() =&gt; resolve(-12), 30))
+<strong>Output:</strong> -2
+<strong>Explanation:</strong> The two input promises resolve with the values of 10 and -12 respectively. The returned promise should resolve with a value of 10 + -12 = -2.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>promise1</code> and <code>promise2</code> are&nbsp;promises that resolve&nbsp;with a number</li>
+</ul>
+
+## Notes
+
+- isme do promice diya gaya hai
+- then ye return kr rahi hai new promice ko promise 1 , promise2 and ye dono promice resolve ho rahi hai number ke saath
+- hmae in promice ko resolve karna hi with sum of two numbers.
+
+- 2 promises hain: promise1 aur promise2
+- Dono promise number return karte hain, jab resolve hote hain
+
+## 🧠 Tumhe kya karna hai?
+
+Ek naya promise return karna hai:
+
+- Jo resolve karega in dono numbers ke sum ke saath
+- i.e., promise1 + promise2 ka sum, jab dono resolve ho chuke hon
+
+## 📘 Concepts involved:
+
+- async/await ya .then() ka use karke tum dono promises ka value nikal sakte ho
+- Fir unka sum karke return kar sakte ho inside another promise
+
+## 💡 Example:
+
+```js
+let p1 = Promise.resolve(5);
+let p2 = Promise.resolve(10);
+
+// Tumhara function(p1, p2) return kare: Promise.resolve(15)
+```
+
+## 🚀 Guide to Solve:
+
+1. Tum async function bana sakte ho — so you can await both promises.
+2. Use `let val1 = await promise1`, `let val2 = await promise2`
+3. `return val1 + val2` — this will auto-wrap in a promise.
