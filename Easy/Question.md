@@ -1064,3 +1064,129 @@ onceFn(4, 6, 8); // undefined, fn was not called
 - Uske baad koi bhi arguments do ya call karo, kuch bhi return nahi karega.
 
 - Useful hota hai jaise: login function, payment trigger — jahan accidental baar-baar call nahi honi chahiye.
+
+---
+
+# Q17: [1768. Merge Strings Alternately](https://leetcode.com/problems/merge-strings-alternately)
+
+**Difficulty:** Easy  
+**Companies:** Amazon, Microsoft, Uber, Adobe, Google
+
+Ye **String Manipulation** aur **Two-Pointer** logic ka base check karne ke liye recruitment rounds mein kaafi popular hai:
+
+- **Amazon**: Unke Online Assessments (OA) mein ye ek standard entry-level question hai.
+- **Microsoft**: Basic coding proficiency aur edge-case handling (unequal string lengths) check karne ke liye.
+- **Uber & Adobe**: String concatenation ki efficiency aur clean loop structures test karne ke liye aksar pucha jata hai.
+- **Google**: Mostly warm-up rounds mein ya junior developer roles ke screening mein dikhta hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Iteration aur Efficiency** ki samajh check karna hai:
+
+1.  **Two-Pointer Technique**: Kya aap do alag indices ko ek saath maintain kar ke strings traverse kar sakte hain?
+2.  **Handling Unequal Lengths**: Jab ek string khatam ho jaye aur doosri bachi ho, toh aap bache hue characters ko kaise efficiently "append" karte hain?
+3.  **String Immutability**: Interviewer ye dekhta hai ki kya aap string concatenation (`+`) use kar rahe hain (jo O(N²) memory le sakta hai) ya `StringBuilder`/`Array join` (jo memory efficient O(N) hai).
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar humein 2 ki jagah **N-strings** alternately merge karni ho, toh aapka approach kaise generalize hoga?"
+> - "Space complexity O(1) kaise rakhoge agar hum output string ko memory mein count na karein?"
+> - "Kya aap Python ka `zip_longest` ya Java ka `Math.max()` use kar ke code ko minimalist aur readable bana sakte hain?"
+
+##
+
+<!-- description:start -->
+
+<p>You are given two strings <code>word1</code> and <code>word2</code>. Merge the strings by adding letters in alternating order, starting with <code>word1</code>. If a string is longer than the other, append the additional letters onto the end of the merged string.</p>
+
+<p>Return <em>the merged string.</em></p>
+
+<p>&nbsp;</p>
+
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+
+<strong>Input:</strong> word1 = &quot;abc&quot;, word2 = &quot;pqr&quot;
+
+<strong>Output:</strong> &quot;apbqcr&quot;
+
+<strong>Explanation:</strong>&nbsp;The merged string will be merged as so:
+
+word1:  a   b   c
+
+word2:    p   q   r
+
+merged: a p b q c r
+
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+
+<strong>Input:</strong> word1 = &quot;ab&quot;, word2 = &quot;pqrs&quot;
+
+<strong>Output:</strong> &quot;apbqrs&quot;
+
+<strong>Explanation:</strong>&nbsp;Notice that as word2 is longer, &quot;rs&quot; is appended to the end.
+
+word1:  a   b 
+
+word2:    p   q   r   s
+
+merged: a p b q   r   s
+
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+
+<strong>Input:</strong> word1 = &quot;abcd&quot;, word2 = &quot;pq&quot;
+
+<strong>Output:</strong> &quot;apbqcd&quot;
+
+<strong>Explanation:</strong>&nbsp;Notice that as word1 is longer, &quot;cd&quot; is appended to the end.
+
+word1:  a   b   c   d
+
+word2:    p   q 
+
+merged: a p b q c   d
+
+</pre>
+
+<p>&nbsp;</p>
+
+<p><strong>Constraints:</strong></p>
+
+<ul>
+
+    <li><code>1 &lt;= word1.length, word2.length &lt;= 100</code></li>
+
+    <li><code>word1</code> and <code>word2</code> consist of lowercase English letters.</li>
+
+</ul>
+
+---
+
+# Notes
+
+- Steps:
+  Ek empty string merged banao result store karne ke liye.
+  Do pointers (i, j) rakho word1 aur word2 ke liye.
+
+- Jab tak koi bhi string khatam na ho (i.e. i < word1.length ya j < word2.length):
+
+- Agar word1[i] hai, to use merged me daalo.
+
+- Agar word2[j] hai, to use bhi merged me daalo.
+
+- Jab loop khatam hoga, to merged string me alternating characters + bacha hua part aa chuka hoga. Us merged string ko return karo.
