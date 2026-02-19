@@ -1930,3 +1930,81 @@ t = "bar"
 ## ⚠️ Yaad Rakhne Ka Tarika (Mnemonic):
 
 "**Ek-to-Ek mapping dono taraf se**" Agar ek character ka mapping change ho gaya — game over!
+
+---
+
+# Q23: [2259. Remove Digit From Number to Maximize Result](https://leetcode.com/problems/remove-digit-from-number-to-maximize-result)
+
+**Difficulty:** Easy  
+**Companies:** Goldman Sachs, Deloitte, D.E. Shaw, TCS, Amazon
+
+Ye **Greedy Algorithm** aur **String Manipulation** ka logic check karne ke liye companies ka go-to question hai:
+
+- **Goldman Sachs**: Unke coding rounds mein greedy-based problems aur string processing kaafi common hai.
+- **Deloitte & TCS**: Competitive programming rounds (jaise TCS NQT) mein logical efficiency aur edge cases (multiple occurrences) test karne ke liye.
+- **Amazon**: Junior SDE roles ke liye jahan wo candidate ki "Best Result" find karne ki approach (Brute Force vs Greedy) ko observe karte hain.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Optimization aur Edge Case Handling** ki samajh check karna hai:
+
+1.  **Greedy Thinking**: Kya aap har occurrence par string naya banakar compare kar rahe hain (O(N²)), ya aap sirf ek loop mein check kar sakte hain ki kab digit remove karne se number bada hoga (O(N))?
+2.  **Lexicographical Comparison**: Strings ko compare karke maximize karna seekhna—ye numerical logic se thoda alag hota hai.
+3.  **Specific Condition**: Agar aapko `digit` milta hai aur uska agla character usse bada hai, toh wahi best spot hai remove karne ke liye—ye key intuition check kiya jata hai.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar humein **Smallest** result chahiye hota, toh greedy condition kaise change hoti?"
+> - "Kya aap isse bina extra string memory allocate kiye (in-place) solve kar sakte hain?"
+> - "Iska harder version **'Remove K Digits'** (LeetCode 402) hai—kya aap usmein Monotonic Stack use kar payenge?"
+
+##
+
+<!-- description:start -->
+
+<p>You are given a string <code>number</code> representing a <strong>positive integer</strong> and a character <code>digit</code>.</p>
+
+<p>Return <em>the resulting string after removing <strong>exactly one occurrence</strong> of </em><code>digit</code><em> from </em><code>number</code><em> such that the value of the resulting string in <strong>decimal</strong> form is <strong>maximized</strong></em>. The test cases are generated such that <code>digit</code> occurs at least once in <code>number</code>.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> number = &quot;123&quot;, digit = &quot;3&quot;
+<strong>Output:</strong> &quot;12&quot;
+<strong>Explanation:</strong> There is only one &#39;3&#39; in &quot;123&quot;. After removing &#39;3&#39;, the result is &quot;12&quot;.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> number = &quot;1231&quot;, digit = &quot;1&quot;
+<strong>Output:</strong> &quot;231&quot;
+<strong>Explanation:</strong> We can remove the first &#39;1&#39; to get &quot;231&quot; or remove the second &#39;1&#39; to get &quot;123&quot;.
+Since 231 &gt; 123, we return &quot;231&quot;.
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> number = &quot;551&quot;, digit = &quot;5&quot;
+<strong>Output:</strong> &quot;51&quot;
+<strong>Explanation:</strong> We can remove either the first or second &#39;5&#39; from &quot;551&quot;.
+Both result in the string &quot;51&quot;.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>2 &lt;= number.length &lt;= 100</code></li>
+	<li><code>number</code> consists of digits from <code>&#39;1&#39;</code> to <code>&#39;9&#39;</code>.</li>
+	<li><code>digit</code> is a digit from <code>&#39;1&#39;</code> to <code>&#39;9&#39;</code>.</li>
+	<li><code>digit</code> occurs at least once in <code>number</code>.</li>
+</ul>
