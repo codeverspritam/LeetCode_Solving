@@ -1579,3 +1579,174 @@ Nahi bola, → to reminder baj jaata hai 5 second ke baad.
 ## ⚠️ Edge Case:
 
 - cancelFn agar delay ke baad call ho — to fn already run ho chuka hoga, aur cancel karne ka koi effect nahi hoga.
+
+---
+
+# Q21: [2725. Interval Cancellation](https://leetcode.com/problems/interval-cancellation)
+
+**Difficulty:** Easy  
+**Companies:** Google, Uber, Razorpay, Zepto
+
+Ye JavaScript interviews mein **Asynchronous Scheduling** aur **Interval Management** check karne ke liye pucha jata hai:
+
+- **Google & Uber**: Real-time dashboards ya live data tracking (like cab location) jahan periodic updates ki zaroorat hoti hai.
+- **Razorpay & Zepto**: High-concurrency systems mein jahan polling logic ko efficiently start aur stop karna padta hai.
+- **ServiceNow & Adobe**: Periodic background tasks aur memory cleanup mechanisms (garbage collection context) test karne ke liye.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Continuous Execution Control** ki samajh check karna hai:
+
+1.  **Immediate Execution**: Kya aap function ko `T=0` par call kar rahe hain, ya pehla execution delay ke baad ho raha hai? (Standard `setInterval` pehli call delay ke baad karta hai).
+2.  **Stateful Cancellation**: `setInterval` se mila hua `timerId` ko closure mein capture karna taaki usey baad mein `clearInterval` kiya ja sake.
+3.  **Higher-Order Functions**: Ek "Cancel Function" return karna jo user ko manual control de sake execution rokne ke liye.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Standard `setInterval` aur is custom logic mein 'Immediate Call' ka kya difference hai?"
+> - "Agar `cancelFn` ko `t` milliseconds ke exact multiple par call karein, toh kya last execution hoga?"
+> - "Kya hum `recursive setTimeout` use kar sakte hain `setInterval` ki jagah? Iske kya fayde honge?" (Correct answer: Drift prevention aur better control).
+
+
+
+##
+
+<!-- description:start -->
+
+<p>Given a function <code>fn</code>, an array of arguments&nbsp;<code>args</code>, and&nbsp;an interval time <code>t</code>, return a cancel function <code>cancelFn</code>.</p>
+
+<p>After a delay of&nbsp;<code>cancelTimeMs</code>, the returned cancel function&nbsp;<code>cancelFn</code>&nbsp;will be invoked.</p>
+
+<pre>
+setTimeout(cancelFn, cancelTimeMs)
+</pre>
+
+<p>The function <code>fn</code> should be called with <code>args</code> immediately and then called again every&nbsp;<code>t</code> milliseconds&nbsp;until&nbsp;<code>cancelFn</code>&nbsp;is called at <code>cancelTimeMs</code> ms.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x) =&gt; x * 2, args = [4], t = 35
+<strong>Output:</strong> 
+[
+   {&quot;time&quot;: 0, &quot;returned&quot;: 8},
+   {&quot;time&quot;: 35, &quot;returned&quot;: 8},
+   {&quot;time&quot;: 70, &quot;returned&quot;: 8},
+   {&quot;time&quot;: 105, &quot;returned&quot;: 8},
+   {&quot;time&quot;: 140, &quot;returned&quot;: 8},
+   {&quot;time&quot;: 175, &quot;returned&quot;: 8}
+]
+<strong>Explanation:</strong> 
+const cancelTimeMs = 190;
+const cancelFn = cancellable((x) =&gt; x * 2, [4], 35);
+setTimeout(cancelFn, cancelTimeMs);
+
+Every 35ms, fn(4) is called. Until t=190ms, then it is cancelled.
+1st fn call is at 0ms. fn(4) returns 8.
+2nd fn call is at 35ms. fn(4) returns 8.
+3rd fn call is at 70ms. fn(4) returns 8.
+4th fn call is at&nbsp;105ms. fn(4) returns 8.
+5th fn call is at 140ms. fn(4) returns 8.
+6th fn call is at 175ms. fn(4) returns 8.
+Cancelled at 190ms
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x1, x2) =&gt; (x1 * x2), args = [2, 5], t = 30
+<strong>Output:</strong> 
+[
+   {&quot;time&quot;: 0, &quot;returned&quot;: 10},
+   {&quot;time&quot;: 30, &quot;returned&quot;: 10},
+   {&quot;time&quot;: 60, &quot;returned&quot;: 10},
+   {&quot;time&quot;: 90, &quot;returned&quot;: 10},
+   {&quot;time&quot;: 120, &quot;returned&quot;: 10},
+   {&quot;time&quot;: 150, &quot;returned&quot;: 10}
+]
+<strong>Explanation:</strong> 
+const cancelTimeMs = 165; 
+const cancelFn = cancellable((x1, x2) =&gt; (x1 * x2), [2, 5], 30) 
+setTimeout(cancelFn, cancelTimeMs)
+
+Every 30ms, fn(2, 5) is called. Until t=165ms, then it is cancelled.
+1st fn call is at 0ms&nbsp;
+2nd fn call is at 30ms&nbsp;
+3rd fn call is at 60ms&nbsp;
+4th fn call is at&nbsp;90ms&nbsp;
+5th fn call is at 120ms&nbsp;
+6th fn call is at 150ms
+Cancelled at 165ms
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> fn = (x1, x2, x3) =&gt; (x1 + x2 + x3), args = [5, 1, 3], t = 50
+<strong>Output:</strong> 
+[
+   {&quot;time&quot;: 0, &quot;returned&quot;: 9},
+   {&quot;time&quot;: 50, &quot;returned&quot;: 9},
+   {&quot;time&quot;: 100, &quot;returned&quot;: 9},
+   {&quot;time&quot;: 150, &quot;returned&quot;: 9}
+]
+<strong>Explanation:</strong> 
+const cancelTimeMs = 180;
+const cancelFn = cancellable((x1, x2, x3) =&gt; (x1 + x2 + x3), [5, 1, 3], 50)
+setTimeout(cancelFn, cancelTimeMs)
+
+Every 50ms, fn(5, 1, 3) is called. Until t=180ms, then it is cancelled. 
+1st fn call is at 0ms
+2nd fn call is at 50ms
+3rd fn call is at 100ms
+4th fn call is at&nbsp;150ms
+Cancelled at 180ms
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>fn</code> is a function</li>
+	<li><code>args</code> is a valid JSON array</li>
+	<li><code>1 &lt;= args.length &lt;= 10</code></li>
+	<li><code><font face="monospace">30 &lt;= t &lt;= 100</font></code></li>
+	<li><code><font face="monospace">10 &lt;= </font>cancelTimeMs<font face="monospace"> &lt;= 500</font></code></li>
+</ul>
+
+## Notes
+
+- **fn**: ek function hai jise call karna hai
+- **args**: us function ke arguments
+- **t**: interval time hai (kitne ms baad baar-baar chalna chahiye)
+- Tumhe ek cancel function **cancelFn** banana hai.
+
+### 🧬 Behavior:
+
+1. **fn(args)** turant (immediately) call hona chahiye.
+2. Uske baad **fn(args)** ko har **t milliseconds** ke baad baar-baar call karte raho.
+3. Jab tak **cancelFn()** call nahi hota, ye chalna chahiye.
+4. **cancelFn()** ek specific time (**cancelTimeMs**) par call hoga (like: `setTimeout(cancelFn, cancelTimeMs)`).
+
+### 🛠️ Kaise implement karenge (approach):
+
+- `setInterval()` ka use karenge fn ko baar-baar call karne ke liye.
+- `setTimeout(cancelFn, cancelTimeMs)` se cancellation time decide hoga.
+- **cancelFn()** ke andar `clearInterval(intervalId)` likhenge taaki fn ruk jaye.
+
+### 💡 Socho Real Life Jaise:
+
+Socho ek **reminder alarm** turant bajta hai, fir har 5 minute baad bajta raha hai. Agar tumne 15 minute baad cancel kar diya, to uske baad alarm nahi bajega.
+
+### ✅ Final Summary:
+
+- **fn(args)** turant chalu karo
+- Har **t milliseconds** baad **fn(args)** chalayenge
+- Jab **cancelFn()** call ho, tab **clearInterval** se repeat rok dena

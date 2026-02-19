@@ -494,3 +494,57 @@ var cancellable = function (fn, args, t) {
  *      console.log(result); // [{"time":20,"returned":10}]
  *  }, maxT + 15)
  */
+
+/* Q 21: Interval Cancellation */
+/**
+ * @param {Function} fn
+ * @param {Array} args
+ * @param {number} t
+ * @return {Function}
+ */
+var cancellable = function (fn, args, t) {
+  // \U0001f539 Pehli baar function ko turant run kar rahe hain
+  fn(...args);
+
+  // \U0001f501 setInterval: har t milliseconds mein fn call hoga
+  intervalId = setInterval(() => {
+    fn(...args); // \U0001f501 Repeat call with same args
+  }, t);
+
+  // ❌ cancel function: interval ko stop karne ke liye
+  cancelFn = () => {
+    clearInterval(intervalId); // \U0001f6d1 Repeat ko rok diya
+  };
+
+  // \U0001f519 cancelFn return kar rahe hain
+  return cancelFn;
+};
+
+/**
+ *  const result = [];
+ *
+ *  const fn = (x) => x * 2;
+ *  const args = [4], t = 35, cancelTimeMs = 190;
+ *
+ *  const start = performance.now();
+ *
+ *  const log = (...argsArr) => {
+ *      const diff = Math.floor(performance.now() - start);
+ *      result.push({"time": diff, "returned": fn(...argsArr)});
+ *  }
+ *
+ *  const cancel = cancellable(log, args, t);
+ *
+ *  setTimeout(cancel, cancelTimeMs);
+ *
+ *  setTimeout(() => {
+ *      console.log(result); // [
+ *                           //     {"time":0,"returned":8},
+ *                           //     {"time":35,"returned":8},
+ *                           //     {"time":70,"returned":8},
+ *                           //     {"time":105,"returned":8},
+ *                           //     {"time":140,"returned":8},
+ *                           //     {"time":175,"returned":8}
+ *                           // ]
+ *  }, cancelTimeMs + t + 15)
+ */
