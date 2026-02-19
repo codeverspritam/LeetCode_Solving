@@ -2089,3 +2089,90 @@ Thus, the result should be [1,0].
 	<li><code>0 &lt;= digits[i] &lt;= 9</code></li>
 	<li><code>digits</code> does not contain any leading <code>0</code>&#39;s.</li>
 </ul>
+
+---
+
+# Q25: [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array)
+
+**Difficulty:** Easy  
+**Companies:** Amazon, Microsoft, Facebook (Meta), LinkedIn, Google
+
+Ye **Array Manipulation** aur **In-place Sorting** ka classic sawal hai jo lagbhag har badi company ke screening round mein pucha ja chuka hai:
+
+- **Amazon & Microsoft**: Unke interviews mein ye sabse zyada pucha jaane wala question hai. Wo check karte hain ki kya aap extra space use kiye bina existing array ko modify kar sakte hain.
+- **Facebook (Meta)**: Performance optimization par unka focus rehta hai, isliye wo O(m+n) time complexity aur O(1) space complexity expect karte hain.
+- **LinkedIn**: Two-pointer approach ki understanding test karne ke liye ye unka favourite warm-up question hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Space Optimization** ki samajh check karna hai:
+
+1.  **In-place Modification**: Kya aap naya array banaye bina `nums1` ke andar hi result store kar sakte hain?
+2.  **Reverse Two-Pointer**: Normal merging aage se start hoti hai, lekin yahan interviewer ye dekhta hai ki kya aapko **piche se (end of array)** merge karne ka idea hai taaki data overwrite na ho.
+3.  **Edge Case Handling**: Jab `nums2` mein elements bache hon aur `nums1` khatam ho jaye, toh unhe kaise handle karna hai.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar hum `nums1.addAll(nums2)` karke `sort()` kardein, toh uski time complexity kya hogi?" (Answer: O((m+n) log(m+n)), jo ki suboptimal hai).
+> - "Piche se (from the end) start karne ka main advantage kya hai?" (Answer: Data overwriting se bachna aur O(1) extra space).
+> - "Agar arrays already sorted na hote, toh kya approach hoti?"
+
+---
+
+**Proactive Follow-up**: Kya aap iska **Reverse Two-Pointer** code dekhna chahenge, ya agla **LeetCode number** bataun?
+
+##
+
+<!-- description:start -->
+
+<p>You are given two integer arrays <code>nums1</code> and <code>nums2</code>, sorted in <strong>non-decreasing order</strong>, and two integers <code>m</code> and <code>n</code>, representing the number of elements in <code>nums1</code> and <code>nums2</code> respectively.</p>
+
+<p><strong>Merge</strong> <code>nums1</code> and <code>nums2</code> into a single array sorted in <strong>non-decreasing order</strong>.</p>
+
+<p>The final sorted array should not be returned by the function, but instead be <em>stored inside the array </em><code>nums1</code>. To accommodate this, <code>nums1</code> has a length of <code>m + n</code>, where the first <code>m</code> elements denote the elements that should be merged, and the last <code>n</code> elements are set to <code>0</code> and should be ignored. <code>nums2</code> has a length of <code>n</code>.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+<strong>Output:</strong> [1,2,2,3,5,6]
+<strong>Explanation:</strong> The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [<u>1</u>,<u>2</u>,2,<u>3</u>,5,6] with the underlined elements coming from nums1.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> nums1 = [1], m = 1, nums2 = [], n = 0
+<strong>Output:</strong> [1]
+<strong>Explanation:</strong> The arrays we are merging are [1] and [].
+The result of the merge is [1].
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> nums1 = [0], m = 0, nums2 = [1], n = 1
+<strong>Output:</strong> [1]
+<strong>Explanation:</strong> The arrays we are merging are [] and [1].
+The result of the merge is [1].
+Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>nums1.length == m + n</code></li>
+	<li><code>nums2.length == n</code></li>
+	<li><code>0 &lt;= m, n &lt;= 200</code></li>
+	<li><code>1 &lt;= m + n &lt;= 200</code></li>
+	<li><code>-10<sup>9</sup> &lt;= nums1[i], nums2[j] &lt;= 10<sup>9</sup></code></li>
+</ul>
