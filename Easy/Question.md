@@ -2008,3 +2008,84 @@ Both result in the string &quot;51&quot;.
 	<li><code>digit</code> is a digit from <code>&#39;1&#39;</code> to <code>&#39;9&#39;</code>.</li>
 	<li><code>digit</code> occurs at least once in <code>number</code>.</li>
 </ul>
+
+---
+
+# Q24: [66. Plus One](https://leetcode.com/problems/plus-one)
+
+**Difficulty:** Easy  
+**Companies:** Google, Apple, Amazon, Adobe
+
+Ye **Array Traversal** aur **Carry Forward** logic ka basics check karne ke liye interviewer ka pasandida sawal hai:
+
+- **Google & Apple**: In companies mein basic mathematics ko arrays ke saath combine karke edge cases (jaise `999 + 1`) handle karne ki ability dekhi jati hai.
+- **Amazon & Adobe**: Junior roles aur intern rounds mein ye check karne ke liye ki kya aap simple brute-force (string conversion) ki jagah optimized array manipulation kar sakte hain.
+- **Finance Tech (Morgan Stanley)**: Jahan precision aur manual math handling ki zaroorat hoti hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Edge Case Management** ki samajh check karna hai:
+
+1.  **The "9" Problem**: Sabse bada challenge tab aata hai jab digit `9` ho aur usey `0` karke carry aage bhejna ho.
+2.  **Array Expansion**: Kya aap handle kar sakte hain jab saare digits `9` hon (jaise `99` -> `100`)? Isme array ka size 1 unit badhana padta hai.
+3.  **Space Efficiency**: Interviewer dekhta hai ki kya aap unnecessary loops chala rahe hain ya pehla non-nine digit milte hi return kar rahe hain.
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar hum digits ko **String** mein convert karke +1 karein aur fir wapas array banayein, toh wo fail kyu ho sakta hai?" (Answer: Integer Overflow for very large arrays).
+> - "Kya aap isse **Recursion** se solve kar sakte hain?"
+> - "Agar humein `+1` ki jagah ek arbitrary number `K` add karna ho (**Add to Array-Form of Integer**), toh logic kaise badlega?"
+
+##
+
+<!-- description:start -->
+
+<p>You are given a <strong>large integer</strong> represented as an integer array <code>digits</code>, where each <code>digits[i]</code> is the <code>i<sup>th</sup></code> digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading <code>0</code>&#39;s.</p>
+
+<p>Increment the large integer by one and return <em>the resulting array of digits</em>.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> digits = [1,2,3]
+<strong>Output:</strong> [1,2,4]
+<strong>Explanation:</strong> The array represents the integer 123.
+Incrementing by one gives 123 + 1 = 124.
+Thus, the result should be [1,2,4].
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> digits = [4,3,2,1]
+<strong>Output:</strong> [4,3,2,2]
+<strong>Explanation:</strong> The array represents the integer 4321.
+Incrementing by one gives 4321 + 1 = 4322.
+Thus, the result should be [4,3,2,2].
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> digits = [9]
+<strong>Output:</strong> [1,0]
+<strong>Explanation:</strong> The array represents the integer 9.
+Incrementing by one gives 9 + 1 = 10.
+Thus, the result should be [1,0].
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>1 &lt;= digits.length &lt;= 100</code></li>
+	<li><code>0 &lt;= digits[i] &lt;= 9</code></li>
+	<li><code>digits</code> does not contain any leading <code>0</code>&#39;s.</li>
+</ul>
