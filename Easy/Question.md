@@ -2090,6 +2090,63 @@ Thus, the result should be [1,0].
 	<li><code>digits</code> does not contain any leading <code>0</code>&#39;s.</li>
 </ul>
 
+## Notes
+
+## Plus One
+
+- Hume ek **array of digits** diya gaya hai jo ek large integer ko represent karta hai.
+- Har element ek **single digit** (0-9) hai.
+- Number **most significant digit se shuru hota hai** (left to right).
+- Hume is number me **+1 kar ke naya array of digits** return karna hai.
+- **digits**: array jo number ko represent karta hai.
+- Return: ek naya array jo original +1 ka result hai.
+
+---
+
+## Task:
+
+Rightmost digit se start karke +1 karo.
+
+- Agar carry nahi aati — directly result return karo.
+- Agar carry aati hai (digit > 9) — digit ko set karo aur carry ke left wale digit me pass karo.
+- Agar carry aati hai uske baad bacha hua — array ke start me 1 insert karo.
+
+---
+
+## Real-Life Analogy:
+
+Sochto tum calculator pe number likh rahe ho aur se increment kar rahe ho.
+
+- Agar last digit **5** hai — simply **6** ban gaya.
+- Agar last digit **9** hai — ban gaya aur carry left wale digit me chala gaya.
+- Agar sab digits **9** hain — pura number **000** ban gaya aur left me **1** lag gaya (jaise **999** → **1000**).
+
+---
+
+## Kaise Sochna Hai (Approach):
+
+1. Loop last index se shuru karo.
+2. Current digit me +1 karo.
+3. Agar digit < 10 → return karo (carry nahi hai).
+4. Agar digit = 10 → us digit ko 0 karo aur carry next left digit me bhejo.
+5. Agar loop ke baad bhi carry bachi hai — array ke start me **1** insert karo.
+
+---
+
+## Important Concepts:
+
+- **Carry Propagation**: Addition me carry aage pass hota hai jab digit limit cross kare.
+- **In-place Update**: Har array ko directly modify kar sakte hain.
+- **Edge Case**: [9,9,9] → [1,0,0,0]
+
+---
+
+## Edge Cases:
+
+- All digits are 9 → **[9,9,9]** → **[1,0,0,0]**
+- Single digit 9 → **[9]** → **[10]**
+- Mixed digits with carry in between → **[1,2,9]** → **[1,3,0]**
+
 ---
 
 # Q25: [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array)
