@@ -1613,8 +1613,6 @@ Iska main maqsad aapki **Continuous Execution Control** ki samajh check karna ha
 > - "Agar `cancelFn` ko `t` milliseconds ke exact multiple par call karein, toh kya last execution hoga?"
 > - "Kya hum `recursive setTimeout` use kar sakte hain `setInterval` ki jagah? Iske kya fayde honge?" (Correct answer: Drift prevention aur better control).
 
-
-
 ##
 
 <!-- description:start -->
@@ -1750,3 +1748,185 @@ Socho ek **reminder alarm** turant bajta hai, fir har 5 minute baad bajta raha h
 - **fn(args)** turant chalu karo
 - Har **t milliseconds** baad **fn(args)** chalayenge
 - Jab **cancelFn()** call ho, tab **clearInterval** se repeat rok dena
+
+---
+
+# Q22: [205. Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings)
+
+**Difficulty:** Easy  
+**Companies:** Amazon, Google, LinkedIn, Bloomberg
+
+Ye problem **Hashing** aur **Mapping** ke patterns ko check karne ke liye top companies ka evergreen favorite hai:
+
+- **Amazon & Google**: Logic-based screening rounds mein frequently pucha jata hai ye check karne ke liye ki aap "One-to-One" mapping handle kar sakte hain ya nahi.
+- **LinkedIn**: Strings aur character frequency se related logic puzzles unke initial rounds mein common hote hain.
+- **Bloomberg**: Jahan data integrity aur encoding-decoding algorithms par focus hota hai, wahan ye concept basic test ki tarah aata hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Data Structure Selection** ki samajh check karna hai:
+
+1.  **Bi-directional Mapping**: Kya aapko pata hai ki `s -> t` aur `t -> s` dono side ki mapping check karna zaroori hai? (Example: `paper` aur `title`).
+2.  **Space-Time Tradeoff**: Kya aap `HashMap` use kar rahe hain (O(N) space) ya `Integer Array` (O(1) space for ASCII) use karke memory optimize kar sakte hain?
+3.  **Pattern Recognition**: Bina characters ko store kiye, kya aap unke **First Occurrence Index** ko compare karke isomorphic property verify kar sakte hain?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar characters ASCII ki jagah Unicode (UTF-8) mein hon, toh aapka array-based approach fail hoga?"
+> - "Kya hum bina extra space (O(1)) ke ise solve kar sakte hain agar humein strings modify karne ki permission ho?"
+> - "Iska logic **Word Pattern** (LeetCode 290) se kaise milta-julta hai?"
+
+---
+
+##
+
+<!-- description:start -->
+
+<p>Given two strings <code>s</code> and <code>t</code>, <em>determine if they are isomorphic</em>.</p>
+
+<p>Two strings <code>s</code> and <code>t</code> are isomorphic if the characters in <code>s</code> can be replaced to get <code>t</code>.</p>
+
+<p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<div class="example-block">
+<p><strong>Input:</strong> <span class="example-io">s = &quot;egg&quot;, t = &quot;add&quot;</span></p>
+
+<p><strong>Output:</strong> <span class="example-io">true</span></p>
+
+<p><strong>Explanation:</strong></p>
+
+<p>The strings <code>s</code> and <code>t</code> can be made identical by:</p>
+
+<ul>
+	<li>Mapping <code>&#39;e&#39;</code> to <code>&#39;a&#39;</code>.</li>
+	<li>Mapping <code>&#39;g&#39;</code> to <code>&#39;d&#39;</code>.</li>
+</ul>
+</div>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<div class="example-block">
+<p><strong>Input:</strong> <span class="example-io">s = &quot;foo&quot;, t = &quot;bar&quot;</span></p>
+
+<p><strong>Output:</strong> <span class="example-io">false</span></p>
+
+<p><strong>Explanation:</strong></p>
+
+<p>The strings <code>s</code> and <code>t</code> can not be made identical as <code>&#39;o&#39;</code> needs to be mapped to both <code>&#39;a&#39;</code> and <code>&#39;r&#39;</code>.</p>
+</div>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<div class="example-block">
+<p><strong>Input:</strong> <span class="example-io">s = &quot;paper&quot;, t = &quot;title&quot;</span></p>
+
+<p><strong>Output:</strong> <span class="example-io">true</span></p>
+</div>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>1 &lt;= s.length &lt;= 5 * 10<sup>4</sup></code></li>
+	<li><code>t.length == s.length</code></li>
+	<li><code>s</code> and <code>t</code> consist of any valid ascii character.</li>
+</ul>
+
+## NOtes
+
+## Tumhare paas:
+
+- 2 strings: s aur t
+
+## Task:
+
+✅ Check karo ki kya s aur t isomorphic hain.
+
+---
+
+## Isomorphic ka Matlab:
+
+Agar s ke characters ko replace karte hain is condition ke saath:
+
+1. **Har character ka fixed mapping hona chahiye** (e.g. ‘a’ → ‘x’ toh ‘a’ hammesha ‘x’ banega)
+2. **Do alag characters same character pe map nahi ho sakte** (e.g. ‘a’ → ‘x’ and ‘b’ → ‘x’ not allowed)
+3. **Ek character ke bhi map ho sakte hain** (e.g. ‘a’ → ‘a’ allowed)
+
+---
+
+## Real-Life Analogy:
+
+Sochto tum secret message bhej rahe ho — Har character ko ek unique character se replace karke.
+
+- Agar ‘a’ ko ‘x’ banaya toh message mein jitne bhi ‘a’ hain, sabhi ‘x’ banenge.
+- Agar tum ‘b’ ko bhi ‘x’ banana chahoge toh confusion ho jayega, kyunki ab ‘x’ ka asli matlab samajh nahi aayega.
+
+---
+
+## Examples Se Samjho:
+
+### Example 1:
+
+```
+s = "egg"
+t = "add"
+```
+
+- ‘e’ → ‘a’
+- ‘g’ → ‘d’
+
+Dono characters consistently map ho rahe hain — **isomorphic** ✅
+
+### Example 2:
+
+```
+s = "foo"
+t = "bar"
+```
+
+- ‘f’ → ‘b’
+- ‘o’ → ‘a’ (first ‘o’)
+- second ‘o’ → ‘r’ Same character ‘o’ do alag values pe map ho raha hai → **not allowed**
+
+---
+
+## Approach (Kaise Sochna Hai):
+
+1. 2 hashmaps ya JS objects banao:
+   - sToT → s ka character kis t wale character pe map ho raha hai.
+   - tToS → reverse mapping bhi check karo.
+2. Loop chalao s.length tak:
+   - Agar koi mapping pehli baar nahi hai — map karo.
+   - Agar pehli baar mapping nahi milti toh **false**.
+   - Agar bhi mismatch mila → **false**.
+3. End tak sab sahi rahe — **true**.
+
+---
+
+## Important Concepts:
+
+- **Map**, **Object**, **for loop**
+- 1:1 character mapping check
+- Order preserve karna
+
+---
+
+## Edge Case:
+
+- Same length zaroori hai (given in question)
+- Repeated characters ka mapping consistent hona chahiye
+
+---
+
+## ⚠️ Yaad Rakhne Ka Tarika (Mnemonic):
+
+"**Ek-to-Ek mapping dono taraf se**" Agar ek character ka mapping change ho gaya — game over!
