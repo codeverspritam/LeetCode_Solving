@@ -70,3 +70,46 @@ var threeSum = function (nums) {
 
   return result;
 };
+
+/*Q3: Memoize*/
+/**
+ * @param {Function} fn
+ * @return {Function}
+ */
+// \U0001f501 Ek memoize function banaya ja raha hai jo kisi bhi function ko optimize karega
+function memoize(fn) {
+  // \U0001f9e0 Ek object banaya jismein sab purane result cache (yaad) karenge
+  let cachedVal = {};
+
+  // \U0001f4e6 Ab ek naya function return kar rahe jo original fn ko wrap karega
+  return function (...args) {
+    // \U0001f3af 'args' ke through jo bhi input aaye, usse val mein store kiya
+    let val = args;
+
+    // \U0001f50d Check kar rahe ki yeh input pehle se cache mein hai ya nahi
+    if (val in cachedVal) {
+      // ✅ Agar hai to direct cache se answer return kar do
+      return cachedVal[val];
+    } else {
+      // \U0001f9ee Agar nahi hai to original function call karo aur result nikalo
+      let result = fn(...args);
+
+      // \U0001f4be Ab jo result aaya usko cache mein store kar lo
+      cachedVal[val] = result;
+
+      // \U0001f4e4 Final result return karo
+      return result;
+    }
+  };
+}
+
+/**
+ * let callCount = 0;
+ * const memoizedFn = memoize(function (a, b) {
+ *	 callCount += 1;
+ *   return a + b;
+ * })
+ * memoizedFn(2, 3) // 5
+ * memoizedFn(2, 3) // 5
+ * console.log(callCount) // 1
+ */
