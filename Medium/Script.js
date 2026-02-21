@@ -147,3 +147,32 @@ var timeLimit = function (fn, t) {
  * const limited = timeLimit((t) => new Promise(res => setTimeout(res, t)), 100);
  * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
  */
+
+/*Q5: K Divisible Elements Subarrays */
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @param {number} p
+ * @return {number}
+ */
+var countDistinct = function (nums, k, p) {
+  let set = new Set();
+  let n = nums.length;
+
+  for (let i = 0; i < n; i++) {
+    let countDiv = 0;
+    let subArr = [];
+
+    for (let j = i; j < n; j++) {
+      subArr.push(nums[j]);
+
+      if (nums[j] % p === 0) countDiv++;
+
+      if (countDiv > k) break; // invalid
+
+      set.add(subArr.join(",")); // store as string for uniqueness
+    }
+  }
+
+  return set.size;
+};

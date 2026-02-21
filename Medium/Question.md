@@ -286,7 +286,7 @@ values = [[5],[]]
 
 ---
 
-# [2637. Promise Time Limit](https://leetcode.com/problems/promise-time-limit)
+# Q4: [2637. Promise Time Limit](https://leetcode.com/problems/promise-time-limit)
 
 **Difficulty:** Medium  
 **Companies:** Amazon, Google, Meta, Uber
@@ -417,3 +417,85 @@ The function immediately throws an error.</pre>
   setTimeout + reject Time limit ka error throw karne ke liye
   async function (...args) Jo bhi function diya hai, uske arguments ke saath async call hota hai
   Use case API timeouts, user-defined delay handling, long tasks limit karne ke liye
+
+---
+
+# Q5: [2261. K Divisible Elements Subarrays](https://leetcode.com/problems/k-divisible-elements-subarrays)
+
+**Difficulty:** Medium  
+**Companies:** Amazon, Google, Goldman Sachs, Adobe
+
+Ye **Subarrays**, **Sliding Window**, aur **Set-based Deduplication** ka logic test karne ke liye ek behtareen question hai:
+
+- **Amazon & Google**: Yeh companies aksar "distinct count" aur "sliding window" patterns ko combine karke tricky medium-level questions poochti hain.
+- **Goldman Sachs**: Math-based array problems unka favorite zone hai, jahan divisibility aur count constraints ko efficiently handle karna hota hai.
+- **Adobe**: Unke coding rounds mein array optimization aur hashing techniques (jaise subarrays ko unique rakhna) par kaafi focus rehta hai.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Unique Subarray Generation** aur **Constraints Handling** ki samajh check karna hai:
+
+1.  **Distinct Subarrays**: Sirf condition match karna kaafi nahi hai, output mein subarrays unique hone chahiye. Iske liye `HashSet` ya `Trie` ka use karke deduplication kaise karte hain, ye test hota hai.
+2.  **Counting Logic**: Har subarray ko check karte waqt `k` elements ki limit (jo `p` se divisible ho) ko efficiently track karna.
+3.  **Efficiency vs Brute Force**: Kya aap O(N²) mein saare valid subarrays generate kar sakte hain, ya aap redundant string conversions se performance hit le rahe hain?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar array ka size bohot bada ($10^5$) ho, toh kya `HashSet<String>` memory limit exceed karega? Iska alternative kya hai?" (Hint: **Trie** ya **Rolling Hash**)
+> - "Kya aap isse O(N) space mein solve kar sakte hain agar subarrays ko store na karna ho?"
+> - "Trie use karne se time aur space complexity mein kya sudhaar aayega?"
+
+##
+
+<!-- description:start -->
+
+<p>Given an integer array <code>nums</code> and two integers <code>k</code> and <code>p</code>, return <em>the number of <strong>distinct subarrays,</strong> which have <strong>at most</strong></em> <code>k</code> <em>elements </em>that are <em>divisible by</em> <code>p</code>.</p>
+
+<p>Two arrays <code>nums1</code> and <code>nums2</code> are said to be <strong>distinct</strong> if:</p>
+
+<ul>
+	<li>They are of <strong>different</strong> lengths, or</li>
+	<li>There exists <strong>at least</strong> one index <code>i</code> where <code>nums1[i] != nums2[i]</code>.</li>
+</ul>
+
+<p>A <strong>subarray</strong> is defined as a <strong>non-empty</strong> contiguous sequence of elements in an array.</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> nums = [<u><strong>2</strong></u>,3,3,<u><strong>2</strong></u>,<u><strong>2</strong></u>], k = 2, p = 2
+<strong>Output:</strong> 11
+<strong>Explanation:</strong>
+The elements at indices 0, 3, and 4 are divisible by p = 2.
+The 11 distinct subarrays which have at most k = 2 elements divisible by 2 are:
+[2], [2,3], [2,3,3], [2,3,3,2], [3], [3,3], [3,3,2], [3,3,2,2], [3,2], [3,2,2], and [2,2].
+Note that the subarrays [2] and [3] occur more than once in nums, but they should each be counted only once.
+The subarray [2,3,3,2,2] should not be counted because it has 3 elements that are divisible by 2.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> nums = [1,2,3,4], k = 4, p = 1
+<strong>Output:</strong> 10
+<strong>Explanation:</strong>
+All element of nums are divisible by p = 1.
+Also, every subarray of nums will have at most 4 elements that are divisible by 1.
+Since all subarrays are distinct, the total number of subarrays satisfying all the constraints is 10.
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>1 &lt;= nums.length &lt;= 200</code></li>
+	<li><code>1 &lt;= nums[i], p &lt;= 200</code></li>
+	<li><code>1 &lt;= k &lt;= nums.length</code></li>
+</ul>
