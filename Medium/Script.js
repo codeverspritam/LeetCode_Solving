@@ -113,3 +113,37 @@ function memoize(fn) {
  * memoizedFn(2, 3) // 5
  * console.log(callCount) // 1
  */
+
+/*Q4: Promise Time Limit*/
+/**
+ * @param {Function} fn
+ * @param {number} t
+ * @return {Function}
+ */
+var timeLimit = function (fn, t) {
+  // timeLimit ek function hai jo kisi bhi async function ko le raha hai (fn)
+  // aur ek time limit (t milliseconds) set karta hai
+
+  return async function (...args) {
+    // Yahan hum ek naye function ko return kar rahe hain jo fn ko call karega
+
+    let onSucess = fn(...args);
+    // fn ko uske arguments ke saath call kiya
+    // Yeh ek promise return karega
+
+    let result = new Promise((res, rej) => {
+      setTimeout(() => {
+        rej("Time Limit Exceeded");
+        // Agar fn time se complete nahi hua to is promise ko reject kar do
+      }, t);
+    });
+
+    // Promise.race => jo bhi promise pehle complete (resolve/reject) karega, wahi final result hoga
+    return Promise.race([onSucess, result]);
+  };
+};
+
+/**
+ * const limited = timeLimit((t) => new Promise(res => setTimeout(res, t)), 100);
+ * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
+ */

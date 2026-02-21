@@ -283,3 +283,137 @@ values = [[5],[]]
 - Agar same input dobara aaye to yeh dobara function call nahi karta because balki direct memory se result deta hai.
 
 - Yeh technique performance boost ke liye hoti hai or especially jab function heavy calculation kare.
+
+---
+
+# [2637. Promise Time Limit](https://leetcode.com/problems/promise-time-limit)
+
+**Difficulty:** Medium  
+**Companies:** Amazon, Google, Meta, Uber
+
+Ye **Asynchronous Resource Management** aur **Timeouts** ke real-world scenario ko handle karne ke liye top companies ka favorite hai:
+
+- **Amazon & Google**: Cloud services aur APIs mein "request timeout" handle karne ka logic check karne ke liye.
+- **Meta (Facebook)**: Front-end performance aur user experience (UX) mein heavy async tasks ko bound karne ke liye.
+- **Uber**: Jahan real-time data fetching mein delay hone par fallback ya error dikhana zaroori hota hai.
+- **Flipkart & PhonePe**: Transactions aur payment gateways mein "hanging promises" se bachne ke liye.
+
+---
+
+### Why This Question?
+
+Iska main maqsad aapki **Promise Racing** aur **Race Conditions** ki samajh check karna hai:
+
+1.  **Promise.race() Pattern**: Kya aap jaante hain ki do promises (original task vs. timeout) ko aapas mein race kaise karwana hai?
+2.  **Error Handling**: Jab time limit exceed ho jaye, toh "Time Limit Exceeded" error ko sahi tareeke se `reject` kaise karna hai?
+3.  **Closures & Timer Cleanup**: `clearTimeout` ka use karke memory leaks se kaise bachein agar original promise time se pehle resolve ho jaye?
+
+---
+
+### Pro-Tip for Interviews
+
+> **Note:** Interviewer ye follow-up questions daag sakta hai:
+>
+> - "Agar original function resolve ho jaye, toh kya humein `timer` ko clear karna chahiye? Kyun?"
+> - "Kya aap isse `AbortController` API use karke implement kar sakte hain taaki actual function execution bhi ruk jaye?"
+> - "Agar function `undefined` return kare, toh aapka logic resolve ya reject mein se kya return karega?"
+
+## Description
+
+<!-- description:start -->
+
+<p>Given an&nbsp;asynchronous function&nbsp;<code>fn</code>&nbsp;and a time <code>t</code>&nbsp;in milliseconds, return&nbsp;a new&nbsp;<strong>time limited</strong>&nbsp;version of the input function. <code>fn</code> takes arguments provided to the&nbsp;<strong>time limited&nbsp;</strong>function.</p>
+
+<p>The <strong>time limited</strong> function should follow these rules:</p>
+
+<ul>
+	<li>If the <code>fn</code> completes within the time limit of <code>t</code> milliseconds, the <strong>time limited</strong> function should&nbsp;resolve with the result.</li>
+	<li>If the execution of the <code>fn</code> exceeds the time limit, the <strong>time limited</strong> function should reject with the string <code>&quot;Time Limit Exceeded&quot;</code>.</li>
+</ul>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+fn = async (n) =&gt; { 
+&nbsp; await new Promise(res =&gt; setTimeout(res, 100)); 
+&nbsp; return n * n; 
+}
+inputs = [5]
+t = 50
+<strong>Output:</strong> {&quot;rejected&quot;:&quot;Time Limit Exceeded&quot;,&quot;time&quot;:50}
+<strong>Explanation:</strong>
+const limited = timeLimit(fn, t)
+const start = performance.now()
+let result;
+try {
+&nbsp; &nbsp;const res = await limited(...inputs)
+&nbsp; &nbsp;result = {&quot;resolved&quot;: res, &quot;time&quot;: Math.floor(performance.now() - start)};
+} catch (err) {
+&nbsp;  result = {&quot;rejected&quot;: err, &quot;time&quot;: Math.floor(performance.now() - start)};
+}
+console.log(result) // Output
+
+The provided function is set to resolve after 100ms. However, the time limit is set to 50ms. It rejects at t=50ms because the time limit was reached.
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+fn = async (n) =&gt; { 
+&nbsp; await new Promise(res =&gt; setTimeout(res, 100)); 
+&nbsp; return n * n; 
+}
+inputs = [5]
+t = 150
+<strong>Output:</strong> {&quot;resolved&quot;:25,&quot;time&quot;:100}
+<strong>Explanation:</strong>
+The function resolved 5 * 5 = 25 at t=100ms. The time limit is never reached.
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+fn = async (a, b) =&gt; { 
+&nbsp; await new Promise(res =&gt; setTimeout(res, 120)); 
+&nbsp; return a + b; 
+}
+inputs = [5,10]
+t = 150
+<strong>Output:</strong> {&quot;resolved&quot;:15,&quot;time&quot;:120}
+<strong>Explanation:</strong>
+​​​​The function resolved 5 + 10 = 15 at t=120ms. The time limit is never reached.
+</pre>
+
+<p><strong class="example">Example 4:</strong></p>
+
+<pre>
+<strong>Input:</strong> 
+fn = async () =&gt; { 
+&nbsp; throw &quot;Error&quot;;
+}
+inputs = []
+t = 1000
+<strong>Output:</strong> {&quot;rejected&quot;:&quot;Error&quot;,&quot;time&quot;:0}
+<strong>Explanation:</strong>
+The function immediately throws an error.</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li><code>0 &lt;= inputs.length &lt;= 10</code></li>
+	<li><code>0 &lt;= t &lt;= 1000</code></li>
+	<li><code>fn</code> returns a promise</li>
+</ul>
+
+## Notes
+
+- Concept Meaning
+  Promise.race([A, B]) Jo bhi promise pehle complete hoga (resolve/reject), wahi final hoga
+  setTimeout + reject Time limit ka error throw karne ke liye
+  async function (...args) Jo bhi function diya hai, uske arguments ke saath async call hota hai
+  Use case API timeouts, user-defined delay handling, long tasks limit karne ke liye
