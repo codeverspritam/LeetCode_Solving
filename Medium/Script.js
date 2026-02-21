@@ -176,3 +176,22 @@ var countDistinct = function (nums, k, p) {
 
   return set.size;
 };
+
+/*Q6: Minimum Consecutive Cards to Pick Up */
+/**
+ * @param {number[]} cards
+ * @return {number}
+ */
+var minimumCardPickup = function (cards) {
+  let lastIndex = new Map();
+  let minLen = Infinity;
+
+  for (let i = 0; i < cards.length; i++) {
+    if (lastIndex.has(cards[i])) {
+      minLen = Math.min(minLen, i - lastIndex.get(cards[i]) + 1);
+    }
+    lastIndex.set(cards[i], i); // update latest index
+  }
+
+  return minLen === Infinity ? -1 : minLen;
+};
